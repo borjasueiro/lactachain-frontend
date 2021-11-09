@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Lactachain</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="log_in">Log In</string>
+    <string name="qr_scan_trace">Qr Scan Trace</string>
+    <string name="farm">Farm</string>
+    <string name="plant">Plant</string>
+</resources>
