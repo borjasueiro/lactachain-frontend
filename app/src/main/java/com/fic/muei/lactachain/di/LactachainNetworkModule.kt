@@ -28,5 +28,5 @@ object LactachainNetworkModule{
     }
     @Singleton
     @Provides
-    fun getFarmMapper(): Mapper<FarmDto, FarmData> = FarmMapper
+    fun getFarmMapper(): Mapper<FarmDto, FarmData> = FarmMapper()
 }

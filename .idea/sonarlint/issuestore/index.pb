@@ -11,8 +11,6 @@ P
  app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
 k
 ;app/src/main/java/com/fic/muei/lactachain/model/FarmData.kt,f/d/fdbda410b45c11bb48253f8ad6afb460d617eb99
-l
-<app/src/main/java/com/fic/muei/lactachain/network/FarmDto.kt,c/d/cd9f3c5b3c4bd4e36c2c9028f61cfda90414c061
 @
 app/build.gradle,f/4/f4a01d6a4fcb971362ec00a83903fd3902f52164
 g

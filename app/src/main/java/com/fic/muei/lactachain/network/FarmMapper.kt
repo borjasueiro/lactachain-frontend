@@ -4,7 +4,7 @@ import com.fic.muei.lactachain.model.FarmData
 import com.fic.muei.lactachain.utils.Mapper
 import javax.inject.Singleton
 
-object FarmMapper: Mapper<FarmDto, FarmData> {
+class FarmMapper: Mapper<FarmDto, FarmData> {
     override fun mapToDto(model: FarmData): FarmDto {
         return FarmDto(model.code,model.province,model.town,model.name)
     }
