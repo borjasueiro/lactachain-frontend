@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.button.setOnClickListener{
             var valor:Int= binding.textInputEditText.text.toString().toInt()
-            //viewModel.getFarmData(valor)
+            viewModel.getFarmData(valor)
         }
     viewModel.farm.observe(this){
         binding.textView.setText(it?.toString())

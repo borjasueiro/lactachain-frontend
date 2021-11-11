@@ -13,14 +13,13 @@ class LactachainViewModel @Inject constructor(
     ViewModel() {
         private var _farm =  MutableLiveData<FarmData>()
         val farm:LiveData<FarmData> get() = _farm
-/*        fun getFarmData(code:Int){
+        fun getFarmData(code:Int){
             viewModelScope.launch {
                 lactachainRepository
                     .getFarm(code)
-                    .asLiveData()
                     .let {
-                        _farm.value = it.value
+                        _farm.value = it
                 }
             }
-        }*/
+        }
 }
