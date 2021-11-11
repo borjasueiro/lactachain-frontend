@@ -1,21 +1,22 @@
 package com.fic.muei.lactachain.di
 
 import android.app.Application
+import com.fic.muei.lactachain.model.LactachainRepository
 import com.fic.muei.lactachain.network.FarmMapper
 import com.fic.muei.lactachain.network.LactachainRepositoryImpl
 import com.fic.muei.lactachain.network.LactachainService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ActivityComponent::class)
+@InstallIn(SingletonComponent::class)
 object LactachainRepositoryModule {
-    @Provides
     @Singleton
-    fun getLactachainRepository(lactachainService:LactachainService, farmMapper:FarmMapper):LactachainRepositoryImpl{
+    @Provides
+    fun getLactachainRepository(lactachainService:LactachainService, farmMapper:FarmMapper): LactachainRepository {
         return LactachainRepositoryImpl(lactachainService,farmMapper)
     }
 }
