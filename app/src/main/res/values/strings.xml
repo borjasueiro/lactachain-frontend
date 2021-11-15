@@ -7,6 +7,8 @@
     <string name="qr_scan_trace">Qr Scan Trace</string>
     <string name="farm">Farm</string>
     <string name="plant">Plant</string>
+    <string name="townHall">Ayuntamiento:</string>
+    <string name="transporter">Transportista:</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
