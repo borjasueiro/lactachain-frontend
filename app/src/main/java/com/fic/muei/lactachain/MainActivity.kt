@@ -3,8 +3,6 @@ package com.fic.muei.lactachain
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import androidx.navigation.findNavController
 import com.fic.muei.lactachain.databinding.ActivityMainBinding
 import com.fic.muei.lactachain.ui.LactachainViewModel
 import dagger.hilt.android.AndroidEntryPoint

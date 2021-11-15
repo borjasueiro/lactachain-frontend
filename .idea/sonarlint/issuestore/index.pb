@@ -13,11 +13,7 @@ w
 Gapp/src/main/java/com/fic/muei/lactachain/model/LactachainRepository.kt,9/a/9ae408051928515a0dec17a64d06e2b8095a7651
 z
 Japp/src/main/java/com/fic/muei/lactachain/di/LactachainRepositoryModule.kt,6/6/66ef9a2a1495b6f921759cfbbbaec0ed879fff4b
-w
-Gapp/src/main/java/com/fic/muei/lactachain/di/LactachainNetworkModule.kt,7/a/7a089955bc79a7cafa87d237e5f3e4c70d272987
 v
 Fapp/src/main/java/com/fic/muei/lactachain/network/LactachainService.kt,6/4/64ef77475c720f30d7d77245ce958e6bb1d98d59
 }
 Mapp/src/main/java/com/fic/muei/lactachain/network/LactachainRepositoryImpl.kt,f/a/fa1e8eaf857ecd27b6929677f03050212db76e44
-s
-Capp/src/main/java/com/fic/muei/lactachain/ui/LactachainViewModel.kt,b/2/b22462cd508911f4e9e66bf2590b6871f97f478d
