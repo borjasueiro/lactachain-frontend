@@ -15,7 +15,6 @@
     </fragment>
     <fragment
         android:id="@+id/selection"
-        android:name="com.fic.muei.lactachain.selection"
-        android:label="fragment_selection"
-        tools:layout="@layout/fragment_selection" />
+        android:name="com.fic.muei.lactachain.ui.selection"
+        android:label="fragment_selection" />
 </navigation>
