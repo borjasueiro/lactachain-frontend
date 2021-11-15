@@ -10,6 +10,7 @@
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.19791666666666666" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.19791666666666666" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.19791666666666666" />
+        <entry key="app/src/main/res/layout/fragment_search_farm.xml" value="0.1984375" />
         <entry key="app/src/main/res/layout/fragment_selection.xml" value="0.24427083333333333" />
         <entry key="app/src/main/res/layout/inicio.xml" value="0.2598958333333333" />
         <entry key="app/src/main/res/layout/log_in.xml" value="0.2598958333333333" />

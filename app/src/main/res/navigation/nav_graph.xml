@@ -15,6 +15,15 @@
     </fragment>
     <fragment
         android:id="@+id/selection"
-        android:name="com.fic.muei.lactachain.ui.selection"
-        android:label="fragment_selection" />
+        android:name="com.fic.muei.lactachain.ui.Selection"
+        android:label="fragment_selection">
+        <action
+            android:id="@+id/action_selection_to_search_farm"
+            app:destination="@id/search_farm" />
+    </fragment>
+    <fragment
+        android:id="@+id/search_farm"
+        android:name="com.fic.muei.lactachain.ui.SearchFarm"
+        android:label="fragment_search_farm"
+        tools:layout="@layout/fragment_search_farm" />
 </navigation>
