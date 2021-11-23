@@ -25,5 +25,17 @@
         android:id="@+id/search_farm"
         android:name="com.fic.muei.lactachain.ui.SearchFarm"
         android:label="fragment_search_farm"
-        tools:layout="@layout/fragment_search_farm" />
+        tools:layout="@layout/fragment_search_farm" >
+        <action
+            android:id="@+id/action_search_farm_to_milkCollection"
+            app:destination="@id/milkCollection" />
+    </fragment>
+    <fragment
+        android:id="@+id/milkCollection"
+        android:name="com.fic.muei.lactachain.ui.MilkCollection"
+        android:label="fragment_milk_collection"
+        tools:layout="@layout/fragment_milk_collection" >
+        <argument android:name="farm"
+            app:argType="com.fic.muei.lactachain.model.FarmData" />
+    </fragment>
 </navigation>

@@ -7,8 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.findNavController
 import com.fic.muei.lactachain.databinding.FragmentSearchFarmBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+
 /**
  * A simple [Fragment] subclass.
  * Use the [SearchFarm.newInstance] factory method to
@@ -24,21 +31,29 @@ class SearchFarm : Fragment() {
     ): View? {
         binding = FragmentSearchFarmBinding.inflate(layoutInflater)
         binding.button.setOnClickListener{
-            val farmid = binding.farmidfilter.text.toString()
-            if (farmid.length>0){
+            val farmId = binding.farmidfilter.text.toString()
+            if (farmId.isNotEmpty()){
                 try {
-                    val farmidAux = farmid.trim().toInt()
-                    viewModel.getFarmData(farmidAux)
+                    val farmIdAux = farmId.trim().toInt()
+                    viewModel.getFarmData(farmIdAux)
                 }catch (e: Exception){
-                    Toast.makeText(context,"Not exists farmid", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,"Not exists farmId", Toast.LENGTH_SHORT).show()
                 }
             }
         }
-        viewModel.farm.observe(viewLifecycleOwner,{farm ->
-            if(farm != null){
-                binding.textView.text = farm.name
+        lifecycleScope.launch{
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.state.collectLatest{uiState ->
+                    when (uiState) {
+                        is FarmUIState.Success -> {
+                            val action = SearchFarmDirections.actionSearchFarmToMilkCollection(uiState.farm)
+                            view?.findNavController()?.navigate(action)
+                        }
+                        is FarmUIState.Error -> Toast.makeText(context,"Not exists farmId", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
-        })
-        return binding.root
+        }
+            return binding.root
     }
 }

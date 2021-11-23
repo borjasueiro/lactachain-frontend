@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="transporter">
+        <item>Transporte</item>
+        <item>Pepe</item>
+    </string-array>
+    <string-array name="transport">
+        <item>1111XXX</item>
+        <item>2222XXX</item>
+    </string-array>
+</resources>

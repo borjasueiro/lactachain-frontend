@@ -1,7 +1,10 @@
 package com.fic.muei.lactachain.model
 
+import kotlinx.coroutines.flow.Flow
+
 
 interface LactachainRepository {
-    suspend fun getFarm(code:Int): FarmData
+
+    fun getFarm(code:Int): Flow<FarmData>
 
 }

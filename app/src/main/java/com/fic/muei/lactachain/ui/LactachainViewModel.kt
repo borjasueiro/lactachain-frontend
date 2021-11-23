@@ -4,6 +4,9 @@ import androidx.lifecycle.*
 import com.fic.muei.lactachain.model.FarmData
 import com.fic.muei.lactachain.model.LactachainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -11,15 +14,21 @@ import javax.inject.Inject
 class LactachainViewModel @Inject constructor(
     private val lactachainRepository: LactachainRepository):
     ViewModel() {
-        private var _farm =  MutableLiveData<FarmData>()
-        val farm:LiveData<FarmData> get() = _farm
+        private var _state =  MutableStateFlow<FarmUIState>(FarmUIState.Empty)
+        val state: StateFlow<FarmUIState> get() = _state
         fun getFarmData(code:Int){
             viewModelScope.launch {
                 lactachainRepository
                     .getFarm(code)
-                    .let {
-                        _farm.value = it
-                }
+                    .collect {
+                        farm -> _state.value = FarmUIState.Success(farm)
+                    }
             }
         }
+}
+
+sealed class FarmUIState {
+    data class Success(val farm:FarmData):FarmUIState()
+    data class Error(val exception: Throwable):FarmUIState()
+    object Empty:FarmUIState()
 }
