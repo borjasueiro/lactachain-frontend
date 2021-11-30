@@ -6,5 +6,6 @@ import kotlinx.coroutines.flow.Flow
 interface LactachainRepository {
 
     fun getFarm(code:Int): Flow<FarmData>
+    fun setCredentials(user:String, password: String)
 
 }

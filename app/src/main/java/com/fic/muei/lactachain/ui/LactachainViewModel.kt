@@ -12,8 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LactachainViewModel @Inject constructor(
-    private val lactachainRepository: LactachainRepository):
-    ViewModel() {
+    private val lactachainRepository: LactachainRepository): ViewModel() {
         private var _state =  MutableStateFlow<FarmUIState>(FarmUIState.Empty)
         val state: StateFlow<FarmUIState> get() = _state
         fun getFarmData(code:Int){
@@ -25,7 +24,11 @@ class LactachainViewModel @Inject constructor(
                     }
             }
         }
-}
+        fun setAuthData(user:String, password:String){
+            lactachainRepository.setCredentials(user, password)
+        }
+    }
+
 
 sealed class FarmUIState {
     data class Success(val farm:FarmData):FarmUIState()
