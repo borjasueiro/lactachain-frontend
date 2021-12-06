@@ -1,10 +1,10 @@
 package com.fic.muei.lactachain.di
 
 import com.fic.muei.lactachain.model.FarmData
-import com.fic.muei.lactachain.network.FarmDto
-import com.fic.muei.lactachain.network.FarmMapper
-import com.fic.muei.lactachain.network.LactachainAuth
-import com.fic.muei.lactachain.network.LactachainService
+import com.fic.muei.lactachain.model.TransporterData
+import com.fic.muei.lactachain.network.*
+import com.fic.muei.lactachain.network.model.FarmDto
+import com.fic.muei.lactachain.network.model.TransporterDto
 import com.fic.muei.lactachain.utils.Mapper
 import dagger.Module
 import dagger.Provides
@@ -31,6 +31,10 @@ object LactachainNetworkModule{
     @Singleton
     @Provides
     fun getFarmMapper(): Mapper<FarmDto, FarmData> = FarmMapper()
+
+    @Singleton
+    @Provides
+    fun getTransporterMapper(): Mapper<TransporterDto, TransporterData> = TransporterMapper()
 
     @Singleton
     @Provides

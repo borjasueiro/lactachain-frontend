@@ -33,23 +33,19 @@ class SearchFarm : Fragment() {
         binding.button.setOnClickListener{
             val farmId = binding.farmidfilter.text.toString()
             if (farmId.isNotEmpty()){
-                try {
-                    val farmIdAux = farmId.trim().toInt()
-                    viewModel.getFarmData(farmIdAux)
-                }catch (e: Exception){
-                    Toast.makeText(context,"Not exists farmId", Toast.LENGTH_SHORT).show()
-                }
+                val farmIdAux = farmId.trim().toInt()
+                viewModel.getFarmData(farmIdAux)
             }
         }
         lifecycleScope.launch{
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.state.collectLatest{uiState ->
+                viewModel.farmState.collectLatest{uiState ->
                     when (uiState) {
                         is FarmUIState.Success -> {
                             val action = SearchFarmDirections.actionSearchFarmToMilkCollection(uiState.farm)
                             view?.findNavController()?.navigate(action)
                         }
-                        is FarmUIState.Error -> Toast.makeText(context,"Not exists farmId", Toast.LENGTH_SHORT).show()
+                        is FarmUIState.Error -> Toast.makeText(context,uiState.exception.message, Toast.LENGTH_SHORT).show()
                     }
                 }
             }

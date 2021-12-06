@@ -20,6 +20,10 @@
         <action
             android:id="@+id/action_selection_to_search_farm"
             app:destination="@id/search_farm" />
+        <argument
+            android:name="btnState"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/search_farm"
@@ -28,7 +32,9 @@
         tools:layout="@layout/fragment_search_farm" >
         <action
             android:id="@+id/action_search_farm_to_milkCollection"
-            app:destination="@id/milkCollection" />
+            app:destination="@id/milkCollection"
+            app:popUpTo="@id/search_farm"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/milkCollection"

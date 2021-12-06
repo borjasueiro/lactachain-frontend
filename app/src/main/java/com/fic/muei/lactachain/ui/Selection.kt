@@ -5,30 +5,30 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
-import com.fic.muei.lactachain.R
-import com.fic.muei.lactachain.databinding.FragmentLogInBinding
 import com.fic.muei.lactachain.databinding.FragmentSelectionBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [selection.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class Selection : Fragment() {
-    // TODO: Rename and change types of parameters
     private lateinit var binding: FragmentSelectionBinding
+    private val viewModel: LactachainViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentSelectionBinding.inflate(layoutInflater)
-        binding.farm.setOnClickListener{
+        val farmButton = binding.farm
+        val plantButton = binding.plant
+        val args = SelectionArgs.fromBundle(requireArguments())
+        val btnState = args.btnState
+        farmButton.setEnabled(!btnState) //False is transporter
+        plantButton.setEnabled(btnState) //True is operator
+        farmButton.setOnClickListener{
+                view->view.findNavController().navigate(SelectionDirections.actionSelectionToSearchFarm())
+        }
+        plantButton.setOnClickListener{
                 view->view.findNavController().navigate(SelectionDirections.actionSelectionToSearchFarm())
         }
         return binding.root

@@ -1,6 +1,7 @@
 package com.fic.muei.lactachain.network
 
 import com.fic.muei.lactachain.model.TransportData
+import com.fic.muei.lactachain.network.model.TransportDto
 import com.fic.muei.lactachain.utils.Mapper
 
 class TransportMapper: Mapper<TransportDto, TransportData> {

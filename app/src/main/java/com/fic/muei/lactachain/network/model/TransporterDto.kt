@@ -1,4 +1,4 @@
-package com.fic.muei.lactachain.network
+package com.fic.muei.lactachain.network.model
 
 data class TransporterDto(val code: Int,
                            val name: String,

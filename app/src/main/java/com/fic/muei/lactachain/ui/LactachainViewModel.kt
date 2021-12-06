@@ -1,8 +1,11 @@
 package com.fic.muei.lactachain.ui
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.fic.muei.lactachain.model.FarmData
 import com.fic.muei.lactachain.model.LactachainRepository
+import com.fic.muei.lactachain.model.Result
+import com.fic.muei.lactachain.model.TransporterData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,25 +16,53 @@ import javax.inject.Inject
 @HiltViewModel
 class LactachainViewModel @Inject constructor(
     private val lactachainRepository: LactachainRepository): ViewModel() {
-        private var _state =  MutableStateFlow<FarmUIState>(FarmUIState.Empty)
-        val state: StateFlow<FarmUIState> get() = _state
+        private var _farmState =  MutableStateFlow<FarmUIState>(FarmUIState.Empty)
+        private var _loginState =  MutableStateFlow<LoginUIState>(LoginUIState.Empty)
+        val farmState: StateFlow<FarmUIState> get() = _farmState
+        val loginState: StateFlow<LoginUIState> get() = _loginState
+        private var _transporter:TransporterData? = null
+        val transporter:TransporterData? get() = _transporter
         fun getFarmData(code:Int){
             viewModelScope.launch {
                 lactachainRepository
                     .getFarm(code)
                     .collect {
-                        farm -> _state.value = FarmUIState.Success(farm)
+                        farm ->  when(farm) {
+                        is Result.Success -> _farmState.value = FarmUIState.Success(farm.data)
+                        is Result.Error   -> _farmState.value = FarmUIState.Error(farm.exception)
+                      }
                     }
             }
         }
         fun setAuthData(user:String, password:String){
             lactachainRepository.setCredentials(user, password)
         }
+        fun getTransporterData(nif:String){
+            viewModelScope.launch {
+                lactachainRepository
+                    .getTransporter(nif)
+                    .collect{
+                      result ->  when(result){
+                          is Result.Success -> {
+                              _transporter = result.data
+                              _loginState.value = LoginUIState.Success(result.data==null)
+
+                              Log.i("TEST",_transporter.toString())
+                          }
+                          is Result.Error -> _loginState.value = LoginUIState.Error(result.exception)
+                      }
+                    }
+            }
+        }
     }
-
-
 sealed class FarmUIState {
     data class Success(val farm:FarmData):FarmUIState()
     data class Error(val exception: Throwable):FarmUIState()
     object Empty:FarmUIState()
+}
+
+sealed class LoginUIState {
+    data class Success(val data:Boolean):LoginUIState()
+    data class Error(val exception: Throwable):LoginUIState()
+    object Empty:LoginUIState()
 }
