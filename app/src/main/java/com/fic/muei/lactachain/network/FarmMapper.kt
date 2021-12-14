@@ -12,11 +12,11 @@ class FarmMapper: Mapper<FarmDto, FarmData> {
         return FarmData(dto.code,dto.province,dto.town,dto.name)
     }
 
-/*    override fun mapToDtoList(dtos: List<FarmDto>): List<FarmData> {
+    override fun mapFromDtoList(dtos: List<FarmDto>): List<FarmData> {
         return dtos.map{mapFromDto(it)}
     }
 
-    override fun mapFromDtoList(models: List<FarmData>): List<FarmDto> {
+    override fun mapToDtoList(models: List<FarmData>): List<FarmDto> {
         return models.map{mapToDto(it)}
-    }*/
+    }
 }

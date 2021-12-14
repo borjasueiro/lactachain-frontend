@@ -1,14 +1,12 @@
 package com.fic.muei.lactachain.network
 
 import android.util.Log
-import com.fic.muei.lactachain.model.FarmData
-import com.fic.muei.lactachain.model.LactachainRepository
-import com.fic.muei.lactachain.model.Result
-import com.fic.muei.lactachain.model.TransporterData
+import com.fic.muei.lactachain.model.*
 import com.fic.muei.lactachain.model.exceptions.FarmException
 import com.fic.muei.lactachain.model.exceptions.LactachainException
 import com.fic.muei.lactachain.model.exceptions.LoginException
 import com.fic.muei.lactachain.network.model.FarmDto
+import com.fic.muei.lactachain.network.model.TransportDto
 import com.fic.muei.lactachain.network.model.TransporterDto
 import com.fic.muei.lactachain.utils.Mapper
 import kotlinx.coroutines.flow.Flow
@@ -19,6 +17,7 @@ class LactachainRepositoryImpl @Inject constructor(
     private val lactachainService : LactachainService,
     private val farmMapper: Mapper<FarmDto, FarmData>,
     private val transporterMapper: Mapper<TransporterDto, TransporterData>,
+    private val transportMapper: Mapper<TransportDto, TransportData>,
     private val lactachainAuth: LactachainAuth
 ):LactachainRepository {
     override fun getFarm(code: Int): Flow<Result<FarmData>> {
@@ -48,9 +47,7 @@ class LactachainRepositoryImpl @Inject constructor(
                 val results = response.results
                 if (results.isNotEmpty()){
                     emit(Result.Success(transporterMapper.mapFromDto(results[0])))
-                    Log.i("TEST","es transportista")
                 }else{
-                    Log.i("TEST","es operario")
                     emit(Result.Success(null))
                 }
 
@@ -63,5 +60,15 @@ class LactachainRepositoryImpl @Inject constructor(
             }
         }
     }
+
+    override fun getTransportByTransporter(code: Int): Flow<Result<List<TransportData>>> {
+        return flow{
+            val response = lactachainService
+                .getTransportsByTransporter(code)
+            val results = response.results
+            emit(Result.Success(transportMapper.mapFromDtoList(results)))
+        }
+    }
+
 
 }

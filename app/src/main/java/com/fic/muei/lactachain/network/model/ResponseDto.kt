@@ -1,5 +1,5 @@
 package com.fic.muei.lactachain.network.model
 
-data class ResponseDto(val count:Int,
-                       val results:List<TransporterDto>
+data class ResponseDto<T>(val count:Int,
+                       val results:List<T>
 )

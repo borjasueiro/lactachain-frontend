@@ -125,7 +125,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="46dp"
                     android:minHeight="48dp"
-                    android:text="@string/townHall" />
+                    android:text="@string/transport" />
                 <ImageView
                     android:id="@+id/addTransportButton"
                     android:layout_width="wrap_content"

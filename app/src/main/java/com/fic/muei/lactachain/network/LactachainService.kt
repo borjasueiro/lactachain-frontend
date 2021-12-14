@@ -12,7 +12,8 @@ interface LactachainService {
     @GET("farms/farm/{code}")
     suspend fun getFarmInfo(@Path("code") code:Int): FarmDto
     @GET("transports/transporter")
-    suspend fun getTransporterInfo(@Query("nif") nif:String): ResponseDto
-    @GET("transports/transport/{code}")
-    suspend fun getTransportInfo(@Path("code") carRegistration:String): TransportDto
+    suspend fun getTransporterInfo(@Query("nif") nif:String): ResponseDto<TransporterDto>
+    @GET("transports/transport")
+    suspend fun getTransportsByTransporter(@Query("transporter") code:Int): ResponseDto<TransportDto>
+
 }

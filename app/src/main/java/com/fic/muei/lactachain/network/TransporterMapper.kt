@@ -12,4 +12,11 @@ class TransporterMapper: Mapper<TransporterDto, TransporterData> {
     override fun mapFromDto(dto: TransporterDto): TransporterData {
         return TransporterData(dto.code, dto.name, dto.nif)
     }
+    override fun mapFromDtoList(dtos: List<TransporterDto>): List<TransporterData> {
+        return dtos.map{mapFromDto(it)}
+    }
+
+    override fun mapToDtoList(models: List<TransporterData>): List<TransporterDto> {
+        return models.map{mapToDto(it)}
+    }
 }
