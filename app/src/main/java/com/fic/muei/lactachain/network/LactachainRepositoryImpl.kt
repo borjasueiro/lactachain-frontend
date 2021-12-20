@@ -75,7 +75,6 @@ class LactachainRepositoryImpl @Inject constructor(
     override fun addTransport(transport: TransportData): Flow<Result<String>> {
         return flow{
             try{
-                Log.i("TEST",transport.transporter.toString())
                 lactachainService
                     .addTransport(transportMapper.mapToDto(transport))
                 emit(Result.Success("Transport added."))

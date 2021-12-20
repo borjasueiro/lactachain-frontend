@@ -14,6 +14,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.fic.muei.lactachain.R
 import com.fic.muei.lactachain.databinding.FragmentAddTransportBinding
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -69,7 +70,14 @@ class AddTransport : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.transportStateCreated.collect {result ->
                     when (result) {
-                        is TransportUIStateCreated.Success -> findNavController().navigate(AddTransportDirections.actionAddTransportToMilkCollection())
+                        is TransportUIStateCreated.Success -> {
+                            val snack = Snackbar.make(binding.root,"Transport added successfully.",Snackbar.LENGTH_INDEFINITE)
+                            snack.setAction("ACCEPT", View.OnClickListener {
+                                findNavController().navigate(AddTransportDirections.actionAddTransportToMilkCollection())
+                            })
+                            snack.show()
+
+                        }
                         is TransportUIStateCreated.Error -> ShowMessage(result.exception.message.toString())
                     }
                 }
