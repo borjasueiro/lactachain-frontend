@@ -1,12 +1,7 @@
 package com.fic.muei.lactachain.network
 
-import com.fic.muei.lactachain.network.model.FarmDto
-import com.fic.muei.lactachain.network.model.ResponseDto
-import com.fic.muei.lactachain.network.model.TransportDto
-import com.fic.muei.lactachain.network.model.TransporterDto
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import com.fic.muei.lactachain.network.model.*
+import retrofit2.http.*
 
 interface LactachainService {
     @GET("farms/farm/{code}")
@@ -14,6 +9,8 @@ interface LactachainService {
     @GET("transports/transporter")
     suspend fun getTransporterInfo(@Query("nif") nif:String): ResponseDto<TransporterDto>
     @GET("transports/transport")
-    suspend fun getTransportsByTransporter(@Query("transporter") code:Int): ResponseDto<TransportDto>
+    suspend fun getTransportsByTransporter(@Query("transporter") code:Int): ResponseDto<TransportListDto>
+    @POST("/transports/transport/")
+    suspend fun addTransport(@Body transport: TransportDto): ResponseDto<TransportDto>
 
 }

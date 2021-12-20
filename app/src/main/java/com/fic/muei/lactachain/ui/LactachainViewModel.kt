@@ -13,22 +13,33 @@ import javax.inject.Inject
 class LactachainViewModel @Inject constructor(
     private val lactachainRepository: LactachainRepository
 ) : ViewModel() {
+    //State variables
     private var _farmState = MutableStateFlow<FarmUIState>(FarmUIState.Empty)
     private var _loginState = MutableStateFlow<LoginUIState>(LoginUIState.Empty)
     private var _transportState = MutableStateFlow<TransportUIState>(TransportUIState.Empty)
-    private var _transporter: MutableLiveData<TransporterData?> = MutableLiveData()
+    private var _transportStateCreated =
+        MutableStateFlow<TransportUIStateCreated>(TransportUIStateCreated.Empty)
     val farmState: StateFlow<FarmUIState> get() = _farmState
     val loginState: StateFlow<LoginUIState> get() = _loginState
     val transportState: StateFlow<TransportUIState> get() = _transportState
+    val transportStateCreated: StateFlow<TransportUIStateCreated> get() = _transportStateCreated
+
+    //Data variables
+    private var _transporter: MutableLiveData<TransporterData?> = MutableLiveData()
+    private var _farm: MutableLiveData<FarmData?> = MutableLiveData()
     val transporter: LiveData<TransporterData?> get() = _transporter
+    val farm: LiveData<FarmData?> get() = _farm
     fun getFarmData(code: Int) {
         viewModelScope.launch {
             lactachainRepository
                 .getFarm(code)
-                .collect { farm ->
-                    when (farm) {
-                        is Result.Success -> _farmState.value = FarmUIState.Success(farm.data)
-                        is Result.Error -> _farmState.value = FarmUIState.Error(farm.exception)
+                .collect { result ->
+                    when (result) {
+                        is Result.Success -> {
+                            _farmState.value = FarmUIState.Success
+                            _farm.value = result.data
+                        }
+                        is Result.Error -> _farmState.value = FarmUIState.Error(result.exception)
                     }
                 }
         }
@@ -63,7 +74,26 @@ class LactachainViewModel @Inject constructor(
                         is Result.Success -> {
                             _transportState.value = TransportUIState.Success(result.data)
                         }
-                        is Result.Error -> _transportState.value = TransportUIState.Error(result.exception)
+                        is Result.Error -> _transportState.value =
+                            TransportUIState.Error(result.exception)
+                    }
+                }
+        }
+    }
+
+    fun addTransport(carRegistration: String, tankCode: String, capacity: Int, current: Boolean) {
+        val transport =
+            TransportData(carRegistration, tankCode, current, capacity, _transporter.value!!.code)
+        viewModelScope.launch {
+            lactachainRepository
+                .addTransport(transport)
+                .collect { result ->
+                    when (result) {
+                        is Result.Success -> {
+                            _transportStateCreated.value = TransportUIStateCreated.Success
+                        }
+                        is Result.Error -> _transportStateCreated.value =
+                            TransportUIStateCreated.Error(result.exception)
                     }
                 }
         }
@@ -71,7 +101,7 @@ class LactachainViewModel @Inject constructor(
 }
 
 sealed class FarmUIState {
-    data class Success(val farm: FarmData) : FarmUIState()
+    object Success : FarmUIState()
     data class Error(val exception: Throwable) : FarmUIState()
     object Empty : FarmUIState()
 }
@@ -83,7 +113,13 @@ sealed class LoginUIState {
 }
 
 sealed class TransportUIState {
-    data class Success(val data: List<TransportData>) : TransportUIState()
+    data class Success(val data: List<TransportListData>) : TransportUIState()
     data class Error(val exception: Throwable) : TransportUIState()
     object Empty : TransportUIState()
+}
+
+sealed class TransportUIStateCreated {
+    object Success : TransportUIStateCreated()
+    data class Error(val exception: Throwable) : TransportUIStateCreated()
+    object Empty : TransportUIStateCreated()
 }

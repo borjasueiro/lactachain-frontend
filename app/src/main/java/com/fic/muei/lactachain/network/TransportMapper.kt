@@ -6,12 +6,12 @@ import com.fic.muei.lactachain.utils.Mapper
 
 class TransportMapper: Mapper<TransportDto, TransportData> {
     override fun mapToDto(model: TransportData): TransportDto {
-        return TransportDto(model.car_registration,
-            model.current)
+        return TransportDto(model.car_registration,model.tank_code,
+            model.current, model.capacity, model.transporter)
     }
     override fun mapFromDto(dto: TransportDto): TransportData {
-        return TransportData(dto.car_registration,
-            dto.current)
+        return TransportData(dto.car_registration,dto.tank_code,
+            dto.current, dto.capacity, dto.transporter)
     }
     override fun mapFromDtoList(dtos: List<TransportDto>): List<TransportData> {
         return dtos.map{mapFromDto(it)}

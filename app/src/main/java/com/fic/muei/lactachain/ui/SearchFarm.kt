@@ -44,8 +44,7 @@ class SearchFarm : Fragment() {
                 viewModel.farmState.collectLatest{uiState ->
                     when (uiState) {
                         is FarmUIState.Success -> {
-                            val action = SearchFarmDirections.actionSearchFarmToMilkCollection(uiState.farm)
-                            view?.findNavController()?.navigate(action)
+                            view?.findNavController()?.navigate(SearchFarmDirections.actionSearchFarmToMilkCollection())
                         }
                         is FarmUIState.Error -> Toast.makeText(context,uiState.exception.message, Toast.LENGTH_SHORT).show()
                     }

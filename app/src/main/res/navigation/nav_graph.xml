@@ -41,7 +41,17 @@
         android:name="com.fic.muei.lactachain.ui.MilkCollection"
         android:label="fragment_milk_collection"
         tools:layout="@layout/fragment_milk_collection" >
-        <argument android:name="farm"
-            app:argType="com.fic.muei.lactachain.model.FarmData" />
+        <action
+            android:id="@+id/action_milkCollection_to_addTransport"
+            app:destination="@id/addTransport" />
+    </fragment>
+    <fragment
+        android:id="@+id/addTransport"
+        android:name="com.fic.muei.lactachain.ui.AddTransport"
+        android:label="fragment_add_transport"
+        tools:layout="@layout/fragment_add_transport" >
+        <action
+            android:id="@+id/action_addTransport_to_milkCollection"
+            app:destination="@id/milkCollection" />
     </fragment>
 </navigation>
