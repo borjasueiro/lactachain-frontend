@@ -44,6 +44,9 @@
         <action
             android:id="@+id/action_milkCollection_to_addTransport"
             app:destination="@id/addTransport" />
+        <action
+            android:id="@+id/action_milkCollection_to_selection"
+            app:destination="@id/selection" />
     </fragment>
     <fragment
         android:id="@+id/addTransport"

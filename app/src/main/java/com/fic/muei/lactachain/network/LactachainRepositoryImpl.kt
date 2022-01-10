@@ -1,14 +1,11 @@
 package com.fic.muei.lactachain.network
 
-import android.util.Log
 import com.fic.muei.lactachain.model.*
 import com.fic.muei.lactachain.model.exceptions.FarmException
 import com.fic.muei.lactachain.model.exceptions.LactachainException
 import com.fic.muei.lactachain.model.exceptions.LoginException
-import com.fic.muei.lactachain.network.model.FarmDto
-import com.fic.muei.lactachain.network.model.TransportDto
-import com.fic.muei.lactachain.network.model.TransportListDto
-import com.fic.muei.lactachain.network.model.TransporterDto
+import com.fic.muei.lactachain.model.exceptions.MilkCollectionException
+import com.fic.muei.lactachain.network.model.*
 import com.fic.muei.lactachain.utils.Mapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -20,6 +17,7 @@ class LactachainRepositoryImpl @Inject constructor(
     private val transporterMapper: Mapper<TransporterDto, TransporterData>,
     private val transportMapper: Mapper<TransportDto, TransportData>,
     private val transportListMapper: Mapper<TransportListDto, TransportListData>,
+    private val milkCollectionMapper: Mapper<MilkCollectionDto, MilkCollectionData>,
     private val lactachainAuth: LactachainAuth
 ):LactachainRepository {
     override fun getFarm(code: Int): Flow<Result<FarmData>> {
@@ -81,6 +79,22 @@ class LactachainRepositoryImpl @Inject constructor(
             }catch(e :Exception){
                 if("400" in e.message.toString()){
                     emit(Result.Error(FarmException("A field is required.")))
+                }else{
+                    emit(Result.Error(LactachainException(e.message)))
+                }
+            }
+        }
+    }
+
+    override fun addMilkCollection(milkCollection: MilkCollectionData): Flow<Result<Int>> {
+        return flow{
+            try{
+                val milkCollectionDto = lactachainService
+                    .addMilkCollection(milkCollectionMapper.mapToDto(milkCollection))
+                emit(Result.Success(milkCollectionDto.code!!))
+            }catch(e :Exception){
+                if("400" in e.message.toString()){
+                    emit(Result.Error(MilkCollectionException("Volumn exceeded.")))
                 }else{
                     emit(Result.Error(LactachainException(e.message)))
                 }

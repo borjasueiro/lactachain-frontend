@@ -9,6 +9,7 @@ interface LactachainRepository {
     fun getTransporter(nif:String): Flow<Result<TransporterData?>>
     fun getTransportByTransporter(code:Int): Flow<Result<List<TransportListData>>>
     fun addTransport(transport:TransportData): Flow<Result<String>>
+    fun addMilkCollection(milkCollection:MilkCollectionData): Flow<Result<Int>>
     fun setCredentials(user:String, password: String)
 
 }

@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,10 +20,12 @@ class LactachainViewModel @Inject constructor(
     private var _transportState = MutableStateFlow<TransportUIState>(TransportUIState.Empty)
     private var _transportStateCreated =
         MutableStateFlow<TransportUIStateCreated>(TransportUIStateCreated.Empty)
+    private var _milkCollectionUIState = MutableStateFlow<MilkCollectionUIState>(MilkCollectionUIState.Empty)
     val farmState: StateFlow<FarmUIState> get() = _farmState
     val loginState: StateFlow<LoginUIState> get() = _loginState
     val transportState: StateFlow<TransportUIState> get() = _transportState
     val transportStateCreated: StateFlow<TransportUIStateCreated> get() = _transportStateCreated
+    val milkCollectionUIState: StateFlow<MilkCollectionUIState> get() = _milkCollectionUIState
 
     //Data variables
     private var _transporter: MutableLiveData<TransporterData?> = MutableLiveData()
@@ -98,6 +101,24 @@ class LactachainViewModel @Inject constructor(
                 }
         }
     }
+
+    fun addMilkCollection(volumn: Int, test: Boolean) {
+        val milkCollection =
+            MilkCollectionData(test, volumn, _farm.value!!.code, _transporter.value!!.code)
+        viewModelScope.launch {
+            lactachainRepository
+                .addMilkCollection(milkCollection)
+                .collect { result ->
+                    when (result) {
+                        is Result.Success -> {
+                            _milkCollectionUIState.value = MilkCollectionUIState.Success(result.data)
+                        }
+                        is Result.Error -> _milkCollectionUIState.value =
+                            MilkCollectionUIState.Error(result.exception)
+                    }
+                }
+        }
+    }
 }
 
 sealed class FarmUIState {
@@ -122,4 +143,10 @@ sealed class TransportUIStateCreated {
     object Success : TransportUIStateCreated()
     data class Error(val exception: Throwable) : TransportUIStateCreated()
     object Empty : TransportUIStateCreated()
+}
+
+sealed class MilkCollectionUIState {
+    data class Success(val code: Int): MilkCollectionUIState()
+    data class Error(val exception: Throwable) : MilkCollectionUIState()
+    object Empty : MilkCollectionUIState()
 }

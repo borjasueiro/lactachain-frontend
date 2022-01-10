@@ -1,14 +1,8 @@
 package com.fic.muei.lactachain.di
 
-import com.fic.muei.lactachain.model.FarmData
-import com.fic.muei.lactachain.model.TransportData
-import com.fic.muei.lactachain.model.TransportListData
-import com.fic.muei.lactachain.model.TransporterData
+import com.fic.muei.lactachain.model.*
 import com.fic.muei.lactachain.network.*
-import com.fic.muei.lactachain.network.model.FarmDto
-import com.fic.muei.lactachain.network.model.TransportDto
-import com.fic.muei.lactachain.network.model.TransportListDto
-import com.fic.muei.lactachain.network.model.TransporterDto
+import com.fic.muei.lactachain.network.model.*
 import com.fic.muei.lactachain.utils.Mapper
 import dagger.Module
 import dagger.Provides
@@ -26,7 +20,7 @@ object LactachainNetworkModule{
     @Provides
     fun getLactachainService(client:OkHttpClient):LactachainService{
         return Retrofit.Builder()
-            .baseUrl("http://192.168.180.210:8080/")
+            .baseUrl("http://192.168.194.210:8080/")
             .addConverterFactory(MoshiConverterFactory.create())
             .client(client)
             .build()
@@ -47,6 +41,10 @@ object LactachainNetworkModule{
     @Singleton
     @Provides
     fun getTransportListMapper(): Mapper<TransportListDto, TransportListData> = TransportListMapper()
+
+    @Singleton
+    @Provides
+    fun getMilkCollectionMapper(): Mapper<MilkCollectionDto, MilkCollectionData> = MilkCollectionMapper()
 
     @Singleton
     @Provides

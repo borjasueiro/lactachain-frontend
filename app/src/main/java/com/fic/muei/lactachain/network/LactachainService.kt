@@ -12,5 +12,7 @@ interface LactachainService {
     suspend fun getTransportsByTransporter(@Query("transporter") code:Int): ResponseDto<TransportListDto>
     @POST("/transports/transport/")
     suspend fun addTransport(@Body transport: TransportDto): ResponseDto<TransportDto>
+    @POST("/farms/milkcollection/")
+    suspend fun addMilkCollection(@Body milkCollection: MilkCollectionDto): MilkCollectionDto
 
 }
