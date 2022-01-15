@@ -5,8 +5,7 @@
     <string name="title_notifications">Notifications</string>
     <string name="log_in">Log In</string>
     <string name="qr_scan_trace">Qr Scan Trace</string>
-    <string name="farm">Farm</string>
-    <string name="plant">Plant</string>
+    <string name="farm">Farm/Plant</string>
     <string name="townHall">Ciudad</string>
     <string name="transporter">Transportista</string>
     <string name="transport">Transporte</string>
@@ -18,5 +17,14 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="temperature_units">ºC</string>
+    <string name="FarmIdSearch">FarmId</string>
+    <string name="add_transport">Add transport</string>
+    <string name="car_plate">Car Plate</string>
+    <string name="tank_code">Tank Code</string>
+    <string name="capacity">Capacity</string>
+    <string name="collect_id"><![CDATA[<Collect id>]]></string>
+    <string name="silo">Silo</string>
+    <string name="silo_id">Silo Id</string>
+    <string name="search_farm">Search farm</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

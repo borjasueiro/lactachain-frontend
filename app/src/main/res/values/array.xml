@@ -8,4 +8,8 @@
         <item>1111XXX</item>
         <item>2222XXX</item>
     </string-array>
+    <string-array name="silo">
+        <item>Recept 1</item>
+        <item>Final 1</item>
+    </string-array>
 </resources>

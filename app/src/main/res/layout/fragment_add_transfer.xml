@@ -1,104 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/coordinator"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".ui.MilkCollection">
-<LinearLayout
-    android:id="@+id/container"
-    android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.15"
         android:orientation="horizontal">
-
         <TextView
             android:id="@+id/FarmName"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/purple_200"
-            android:gravity="center"
-            android:text="@string/add_transport"
+            android:text="@string/collect_id"
             android:textAlignment="center"
-            android:textColor="#5E35B1"
+            android:gravity="center"
             android:textSize="@dimen/header_font_size"
             android:textStyle="bold"
+            android:textColor="@color/white"
+            android:background="@color/purple_200"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </LinearLayout>
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.77"
         android:orientation="horizontal">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingHorizontal="50dp"
             android:paddingVertical="20dp"
             android:orientation="vertical">
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.16666"
-                android:paddingHorizontal="30dp"
                 android:paddingVertical="15dp"
-                android:orientation="horizontal">
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    app:boxStrokeColor="@color/edit_text"
-                    android:layout_height="wrap_content"
-                    app:hintTextColor="@color/edit_text"
-                    app:boxBackgroundColor="@color/white"
-                    android:textColorHint="@color/field_state"
-                    android:hint="@string/car_plate"
-                    >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/carPlate"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:drawableStart="@drawable/ic_baseline_directions_car_24"
-                        android:gravity="center_horizontal"
-                        android:inputType="none"
-                        android:textSize="@dimen/font_size_forms" />
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
                 android:layout_weight="0.16666"
-                android:paddingHorizontal="30dp"
-                android:paddingVertical="15dp"
                 android:orientation="horizontal">
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    app:boxStrokeColor="@color/edit_text"
+                <ImageView
+                    android:id="@+id/car_icon"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="left|top"
-                    app:hintTextColor="@color/edit_text"
-                    app:boxBackgroundColor="@color/white"
-                    android:textColorHint="@color/field_state"
-                    android:hint="@string/tank_code"
-                    >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tankCode"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:drawableStart="@drawable/ic_baseline_local_shipping_24"
-                        android:gravity="center_horizontal"
-                        android:textColor="@color/edit_text_selected"
-                        android:inputType="none"
-                        android:textSize="@dimen/font_size_forms" />
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
+                    android:layout_marginEnd="22dp"
+                    android:src="@drawable/ic_baseline_battery_0_bar_24"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/car_plate"
+                    android:contentDescription="@string/silo"/>
+
+                <Spinner
+                    android:id="@+id/car_plate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/silo"
+                    android:gravity="center_horizontal"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="46dp"
+                    android:minHeight="48dp"
+                    android:text="@string/silo" />
+                <ImageView
+                    android:id="@+id/addTransportButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_add_circle_24"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:contentDescription="@string/transport"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -113,10 +96,10 @@
                     app:hintTextColor="@color/edit_text"
                     app:boxBackgroundColor="@color/white"
                     android:textColorHint="@color/field_state"
-                    android:hint="@string/capacity"
+                    android:hint="@string/volume"
                     >
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/capacity"
+                        android:id="@+id/volume"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:drawableStart="@drawable/ic_baseline_opacity_24"
@@ -126,6 +109,38 @@
                         android:textSize="@dimen/font_size_forms" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:paddingHorizontal="36dp"
+                android:paddingVertical="15dp"
+                android:layout_weight="0.16666"
+                android:orientation="horizontal">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    app:boxStrokeColor="@color/edit_text"
+                    android:layout_height="wrap_content"
+                    app:hintTextColor="@color/edit_text"
+                    app:boxBackgroundColor="@color/white"
+                    android:textColorHint="@color/field_state"
+                    android:hint="@string/temperature"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/temperature"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:drawableStart="@drawable/ic_temp"
+                        android:gravity="center_horizontal"
+                        android:textColor="@color/edit_text_selected"
+                        android:inputType="numberDecimal"
+                        android:textSize="@dimen/font_size_forms" />
+                    <TextView
+                        android:id="@+id/temperature_units"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dip"
+                        android:text="@string/temperature_units" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -133,10 +148,10 @@
                 android:paddingVertical="20dp"
                 android:layout_weight="0.16666">
                 <ImageView
-                    android:id="@+id/current"
+                    android:id="@+id/sample"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_baseline_sync_24"
+                    android:src="@drawable/ic_baseline_colorize_24"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/sample_switch"
@@ -162,18 +177,15 @@
         android:layout_height="0dp"
         android:layout_weight="0.08"
         android:orientation="horizontal">
-
         <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/addTransportButton"
+            android:id="@+id/addMilkCollection"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/add_button"
+            app:srcCompat="@drawable/ic_baseline_add_64"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/ic_baseline_add_64"
-            tools:ignore="SpeakableTextPresentCheck" />
+            app:layout_constraintStart_toStartOf="parent" />
     </LinearLayout>
 
 </LinearLayout>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>

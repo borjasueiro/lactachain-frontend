@@ -13,19 +13,23 @@
         <entry key="app/src/main/res/drawable/ic_temp.xml" value="0.371875" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main_bck.xml" value="0.19791666666666666" />
-        <entry key="app/src/main/res/layout/fragment_add_transport.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_add_silo.xml" value="0.5058876811594203" />
+        <entry key="app/src/main/res/layout/fragment_add_transfer.xml" value="0.5058876811594203" />
+        <entry key="app/src/main/res/layout/fragment_add_transport.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.19791666666666666" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.19791666666666666" />
-        <entry key="app/src/main/res/layout/fragment_log_in.xml" value="0.12454710144927536" />
+        <entry key="app/src/main/res/layout/fragment_log_in.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_milk_collection.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.19791666666666666" />
         <entry key="app/src/main/res/layout/fragment_search_farm.xml" value="0.1984375" />
         <entry key="app/src/main/res/layout/fragment_selection.xml" value="0.24427083333333333" />
+        <entry key="app/src/main/res/layout/fragment_traces_list.xml" value="0.5058876811594203" />
         <entry key="app/src/main/res/layout/inicio.xml" value="0.2598958333333333" />
         <entry key="app/src/main/res/layout/log_in.xml" value="0.2598958333333333" />
         <entry key="app/src/main/res/layout/milkcollection.xml" value="0.25" />
         <entry key="app/src/main/res/layout/milkcollection_test.xml" value="0.25104166666666666" />
         <entry key="app/src/main/res/layout/scan_qr.xml" value="0.24739583333333334" />
+        <entry key="app/src/main/res/layout/search_farm_backup.xml" value="0.5058876811594203" />
         <entry key="app/src/main/res/layout/test.xml" value="0.19791666666666666" />
       </map>
     </option>

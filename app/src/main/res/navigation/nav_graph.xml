@@ -57,4 +57,19 @@
             android:id="@+id/action_addTransport_to_milkCollection"
             app:destination="@id/milkCollection" />
     </fragment>
+    <fragment
+        android:id="@+id/add_transfer"
+        android:name="com.fic.muei.lactachain.add_transfer"
+        android:label="fragment_add_transfer"
+        tools:layout="@layout/fragment_add_transfer" />
+    <fragment
+        android:id="@+id/add_silo"
+        android:name="com.fic.muei.lactachain.add_silo"
+        android:label="fragment_add_silo"
+        tools:layout="@layout/fragment_add_silo" />
+    <fragment
+        android:id="@+id/traces_list"
+        android:name="com.fic.muei.lactachain.traces_list"
+        android:label="fragment_traces_list"
+        tools:layout="@layout/fragment_traces_list" />
 </navigation>

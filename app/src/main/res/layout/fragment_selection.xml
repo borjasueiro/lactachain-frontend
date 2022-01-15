@@ -8,32 +8,32 @@ android:layout_height="match_parent"
 android:paddingTop="?attr/actionBarSize"
 tools:context=".ui.Selection">
 
+    <ImageButton
+        android:id="@+id/scan_qr_trace"
+        android:layout_width="300dp"
+        android:layout_height="150dp"
+        android:contentDescription="@string/qr_scan_trace"
+        android:src="@drawable/ic_baseline_qr_code_scanner_48"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.15"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="ImageContrastCheck"
+        tools:src="@drawable/ic_baseline_qr_code_scanner_48" />
 <Button
     android:id="@+id/farm"
-    android:layout_width="170dp"
-    android:layout_height="85dp"
+    android:layout_width="300dp"
+    android:layout_height="150dp"
     android:text="@string/farm"
     app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintHorizontal_bias="0.516"
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintRight_toRightOf="parent"
     app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintVertical_bias="0.215"
-    tools:text="Farm" />
-
-<Button
-    android:id="@+id/plant"
-    android:layout_width="170dp"
-    android:layout_height="85dp"
-    android:layout_marginTop="120dp"
-    android:text="@string/plant"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintHorizontal_bias="0.498"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/farm"
-    app:layout_constraintVertical_bias="0.0"
-    tools:text="Plant" />
+    app:layout_constraintTop_toBottomOf="@+id/scan_qr_trace"
+    tools:text="Farm/Plant" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
