@@ -24,4 +24,5 @@ object LactachainRepositoryModule {
                                 MilkCollectionMapper: Mapper<MilkCollectionDto, MilkCollectionData>): LactachainRepository {
         return LactachainRepositoryImpl(lactachainService,farmMapper, transporterMapper, transportMapper, transportListMapper, MilkCollectionMapper, interceptor)
     }
+
 }

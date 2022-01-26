@@ -10,12 +10,14 @@ class MilkCollectionMapper: Mapper<MilkCollectionDto, MilkCollectionData> {
             model.test,
             model.volumn,
             model.farm,
+            null,
             model.transporter
         )
     }
 
     override fun mapFromDto(dto: MilkCollectionDto): MilkCollectionData {
         return MilkCollectionData(
+            dto.code,
             dto.test,
             dto.volumn,
             dto.farm,

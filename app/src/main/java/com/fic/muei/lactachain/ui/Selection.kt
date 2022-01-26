@@ -20,17 +20,15 @@ class Selection : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentSelectionBinding.inflate(layoutInflater)
-        val farmButton = binding.farm
-        val plantButton = binding.plant
+        val nextButton = binding.next
         val args = SelectionArgs.fromBundle(requireArguments())
         val btnState = args.btnState
-        farmButton.setEnabled(!btnState) //False is transporter
-        plantButton.setEnabled(btnState) //True is operator
-        farmButton.setOnClickListener{
-                view->view.findNavController().navigate(SelectionDirections.actionSelectionToSearchFarm())
-        }
-        plantButton.setOnClickListener{
-                view->view.findNavController().navigate(SelectionDirections.actionSelectionToSearchFarm())
+        nextButton.text = if (!btnState) "Add Collection" else "See Traces" //False is transporter
+        nextButton.setOnClickListener{view->
+            if (!btnState)
+                view.findNavController().navigate(SelectionDirections.actionSelectionToSearchFarm())
+            else
+                view.findNavController().navigate(SelectionDirections.actionSelectionToTracesList())
         }
         return binding.root
     }

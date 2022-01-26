@@ -1,7 +1,6 @@
 package com.fic.muei.lactachain.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -42,19 +41,15 @@ class MilkCollection : Fragment() {
 
         binding = FragmentMilkCollectionBinding.inflate(layoutInflater)
         viewModel.farm.observe(viewLifecycleOwner) { farm ->
-            run {
-                if (farm != null) {
-                    binding.FarmName.text = farm.name
-                    binding.townHall.setText(farm.town)
-                }
+            if (farm != null) {
+                binding.FarmName.text = farm.name
+                binding.townHall.setText(farm.town)
             }
         }
         viewModel.transporter.observe(viewLifecycleOwner) { transporter ->
-            run {
-                if (transporter != null) {
-                    binding.transporter.setText(transporter.name)
-                    viewModel.getTransportData()
-                }
+            if (transporter != null) {
+                binding.transporter.setText(transporter.name)
+                viewModel.getTransportData()
             }
         }
         val spinner = binding.carPlate
@@ -130,6 +125,6 @@ class MilkCollection : Fragment() {
                 }
             }
         }
-    return binding.root
-}
+        return binding.root
+    }
 }

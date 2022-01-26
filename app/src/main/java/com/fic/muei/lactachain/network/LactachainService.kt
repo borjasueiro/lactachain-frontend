@@ -7,9 +7,13 @@ interface LactachainService {
     @GET("farms/farm/{code}")
     suspend fun getFarmInfo(@Path("code") code:Int): FarmDto
     @GET("transports/transporter")
+    suspend fun getTransporterInfoById(@Query("code") code:String): ResponseDto<TransporterDto>
+    @GET("transports/transporter")
     suspend fun getTransporterInfo(@Query("nif") nif:String): ResponseDto<TransporterDto>
     @GET("transports/transport")
     suspend fun getTransportsByTransporter(@Query("transporter") code:Int): ResponseDto<TransportListDto>
+    @GET("/farms/milkcollection/")
+    suspend fun getMilkCollections(): ResponseDto<MilkCollectionDto>
     @POST("/transports/transport/")
     suspend fun addTransport(@Body transport: TransportDto): ResponseDto<TransportDto>
     @POST("/farms/milkcollection/")

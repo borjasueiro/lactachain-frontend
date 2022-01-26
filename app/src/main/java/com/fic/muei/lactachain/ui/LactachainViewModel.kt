@@ -1,8 +1,13 @@
 package com.fic.muei.lactachain.ui
 
+import android.R
+import android.util.Log
+import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.lifecycle.*
 import com.fic.muei.lactachain.model.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
@@ -21,17 +26,24 @@ class LactachainViewModel @Inject constructor(
     private var _transportStateCreated =
         MutableStateFlow<TransportUIStateCreated>(TransportUIStateCreated.Empty)
     private var _milkCollectionUIState = MutableStateFlow<MilkCollectionUIState>(MilkCollectionUIState.Empty)
+    private var _listItemUIState = MutableStateFlow<ListItemUIState>(ListItemUIState.Loading)
+
     val farmState: StateFlow<FarmUIState> get() = _farmState
     val loginState: StateFlow<LoginUIState> get() = _loginState
     val transportState: StateFlow<TransportUIState> get() = _transportState
     val transportStateCreated: StateFlow<TransportUIStateCreated> get() = _transportStateCreated
     val milkCollectionUIState: StateFlow<MilkCollectionUIState> get() = _milkCollectionUIState
-
+    val listItemUIState: StateFlow<ListItemUIState> get() = _listItemUIState
     //Data variables
     private var _transporter: MutableLiveData<TransporterData?> = MutableLiveData()
     private var _farm: MutableLiveData<FarmData?> = MutableLiveData()
+    private var _listItemTransport: MutableLiveData<List<MilkCollectionDataItem>?> = MutableLiveData()
+    private var _listItemSilo: MutableLiveData<List<MilkCollectionDataItem>?> = MutableLiveData() // Change when creates silo data
     val transporter: LiveData<TransporterData?> get() = _transporter
     val farm: LiveData<FarmData?> get() = _farm
+    val listItemTransport: LiveData<List<MilkCollectionDataItem>?> get() = _listItemTransport
+    val listItemSilo: LiveData<List<MilkCollectionDataItem>?> get() = _listItemSilo // Change when creates silo data
+
     fun getFarmData(code: Int) {
         viewModelScope.launch {
             lactachainRepository
@@ -104,7 +116,7 @@ class LactachainViewModel @Inject constructor(
 
     fun addMilkCollection(volumn: Int, test: Boolean) {
         val milkCollection =
-            MilkCollectionData(test, volumn, _farm.value!!.code, _transporter.value!!.code)
+            MilkCollectionData(null,test, volumn, _farm.value!!.code, _transporter.value!!.code)
         viewModelScope.launch {
             lactachainRepository
                 .addMilkCollection(milkCollection)
@@ -115,6 +127,24 @@ class LactachainViewModel @Inject constructor(
                         }
                         is Result.Error -> _milkCollectionUIState.value =
                             MilkCollectionUIState.Error(result.exception)
+                    }
+                }
+        }
+    }
+
+    fun getLists(){
+        viewModelScope.launch {
+            lactachainRepository
+                .getMilkCollections()
+                .collect{ result ->
+                    when (result) {
+                        is Result.Success -> {
+                            _listItemTransport.value = result.data
+                            _listItemUIState.value = ListItemUIState.Success
+                        }
+                        is Result.Error -> {
+                            _listItemUIState.value = ListItemUIState.Error(result.exception)
+                        }
                     }
                 }
         }
@@ -149,4 +179,10 @@ sealed class MilkCollectionUIState {
     data class Success(val code: Int): MilkCollectionUIState()
     data class Error(val exception: Throwable) : MilkCollectionUIState()
     object Empty : MilkCollectionUIState()
+}
+
+sealed class ListItemUIState {
+    object Success: ListItemUIState()
+    data class Error(val exception: Throwable) : ListItemUIState()
+    object Loading : ListItemUIState()
 }

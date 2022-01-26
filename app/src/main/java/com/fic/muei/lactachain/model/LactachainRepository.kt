@@ -11,7 +11,7 @@ interface LactachainRepository {
     fun addTransport(transport:TransportData): Flow<Result<String>>
     fun addMilkCollection(milkCollection:MilkCollectionData): Flow<Result<Int>>
     fun setCredentials(user:String, password: String)
-
+    fun getMilkCollections(): Flow<Result<List<MilkCollectionDataItem>>>
 }
 
 sealed class Result<out T: Any?> {

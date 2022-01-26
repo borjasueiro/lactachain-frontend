@@ -14,7 +14,6 @@
     <string name="temperature">Temperatura</string>
     <string name="volume_loaded">Write volume loaded.</string>
     <string name="milk_temperature">Write milk temperature.</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="temperature_units">ºC</string>
     <string name="FarmIdSearch">FarmId</string>
@@ -26,5 +25,4 @@
     <string name="silo">Silo</string>
     <string name="silo_id">Silo Id</string>
     <string name="search_farm">Search farm</string>
-    <!-- TODO: Remove or change this placeholder text -->
 </resources>

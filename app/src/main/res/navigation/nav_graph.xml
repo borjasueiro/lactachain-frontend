@@ -24,6 +24,9 @@
             android:name="btnState"
             app:argType="boolean"
             android:defaultValue="false" />
+        <action
+            android:id="@+id/action_selection_to_traces_list"
+            app:destination="@id/traces_list" />
     </fragment>
     <fragment
         android:id="@+id/search_farm"
@@ -59,17 +62,17 @@
     </fragment>
     <fragment
         android:id="@+id/add_transfer"
-        android:name="com.fic.muei.lactachain.add_transfer"
+        android:name="com.fic.muei.lactachain.ui.AddTransfer"
         android:label="fragment_add_transfer"
         tools:layout="@layout/fragment_add_transfer" />
     <fragment
         android:id="@+id/add_silo"
-        android:name="com.fic.muei.lactachain.add_silo"
+        android:name="com.fic.muei.lactachain.ui.AddSilo"
         android:label="fragment_add_silo"
         tools:layout="@layout/fragment_add_silo" />
     <fragment
         android:id="@+id/traces_list"
-        android:name="com.fic.muei.lactachain.traces_list"
+        android:name="com.fic.muei.lactachain.ui.TracesList"
         android:label="fragment_traces_list"
         tools:layout="@layout/fragment_traces_list" />
 </navigation>

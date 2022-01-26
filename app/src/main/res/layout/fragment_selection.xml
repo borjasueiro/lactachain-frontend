@@ -24,7 +24,7 @@ tools:context=".ui.Selection">
         tools:ignore="ImageContrastCheck"
         tools:src="@drawable/ic_baseline_qr_code_scanner_48" />
 <Button
-    android:id="@+id/farm"
+    android:id="@+id/next"
     android:layout_width="300dp"
     android:layout_height="150dp"
     android:text="@string/farm"

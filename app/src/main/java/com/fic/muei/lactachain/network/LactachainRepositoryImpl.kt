@@ -1,5 +1,6 @@
 package com.fic.muei.lactachain.network
 
+import android.util.Log
 import com.fic.muei.lactachain.model.*
 import com.fic.muei.lactachain.model.exceptions.FarmException
 import com.fic.muei.lactachain.model.exceptions.LactachainException
@@ -95,6 +96,34 @@ class LactachainRepositoryImpl @Inject constructor(
             }catch(e :Exception){
                 if("400" in e.message.toString()){
                     emit(Result.Error(MilkCollectionException("Volumn exceeded.")))
+                }else{
+                    emit(Result.Error(LactachainException(e.message)))
+                }
+            }
+        }
+    }
+
+    override fun getMilkCollections(): Flow<Result<List<MilkCollectionDataItem>>> {
+        return flow{
+            try{
+                val milkCollections = lactachainService
+                    .getMilkCollections().results
+                var result:MutableList<MilkCollectionDataItem> = mutableListOf()
+                val milkCollectionsMap: MutableMap<String,String> = mutableMapOf()
+                for (milkCollection in milkCollections){
+                    val transporterId = milkCollection.transporter.toString()
+                    var transporterName = milkCollectionsMap[transporterId]
+                    if (transporterName == null){
+                        val transporter = lactachainService.getTransporterInfoById(milkCollection.transporter.toString()).results[0]
+                        transporterName = transporter.name
+                        milkCollectionsMap[transporterId] = transporterName
+                    }
+                    result.add(MilkCollectionDataItem(milkCollection.code, transporterName,milkCollection.date!!))
+                }
+                emit(Result.Success(result))
+            }catch(e :Exception){
+                if("400" in e.message.toString()){
+                    emit(Result.Error(MilkCollectionException("Error traces.")))
                 }else{
                     emit(Result.Error(LactachainException(e.message)))
                 }
