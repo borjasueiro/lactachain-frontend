@@ -6,8 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.selection.SelectionPredicates
+import androidx.recyclerview.selection.SelectionTracker
+import androidx.recyclerview.selection.StableIdKeyProvider
+import androidx.recyclerview.selection.StorageStrategy
 import com.fic.muei.lactachain.databinding.TransportTracesListBinding
 import com.fic.muei.lactachain.model.MilkCollectionDataItem
+import com.fic.muei.lactachain.ui.component.MyItemKeyProvider
+import com.fic.muei.lactachain.ui.component.SelectionItemLookup
 import com.fic.muei.lactachain.ui.component.TransportAdapter
 
 class TransportFragment: Fragment() {
@@ -20,12 +26,23 @@ class TransportFragment: Fragment() {
         binding = TransportTracesListBinding.inflate(layoutInflater)
 
         val recycleView = binding.recyclerView
-        recycleView.adapter = TransportAdapter(listOf())
+        val adapter = TransportAdapter(listOf())
+        recycleView.adapter = adapter
         viewModel.listItemTransport.observe(viewLifecycleOwner) { l ->
             if (l != null) {
-                (recycleView.adapter as TransportAdapter).setData(l)
+                adapter.setData(l)
             }
         }
+        val tracker = SelectionTracker.Builder<MilkCollectionDataItem>(
+            "mySelection",
+            recycleView,
+            MyItemKeyProvider(adapter),
+            SelectionItemLookup(recycleView),
+            StorageStrategy.createParcelableStorage(MilkCollectionDataItem::class.java)
+        ).withSelectionPredicate(
+            SelectionPredicates.createSelectAnything()
+        ).build()
+        adapter.tracker = tracker
         return binding.root
     }
     companion object{

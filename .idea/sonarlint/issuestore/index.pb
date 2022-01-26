@@ -59,12 +59,8 @@ g
 Lapp/src/main/java/com/fic/muei/lactachain/network/model/MilkCollectionDto.kt,a/a/aaae4aef65aa438ed4c70e8b65215724e7d13c02
 y
 Iapp/src/main/java/com/fic/muei/lactachain/network/MilkCollectionMapper.kt,f/9/f91e17f4eccaeed388d36de6e7da3df28e4503fe
-<
-build.gradle,f/0/f07866736216be0ee2aba49e392191aeae700a35
 X
 (gradle/wrapper/gradle-wrapper.properties,f/b/fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
-@
-app/build.gradle,f/4/f4a01d6a4fcb971362ec00a83903fd3902f52164
 v
 Fapp/src/main/java/com/fic/muei/lactachain/network/LactachainService.kt,6/4/64ef77475c720f30d7d77245ce958e6bb1d98d59
 n
