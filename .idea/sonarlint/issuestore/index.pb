@@ -47,8 +47,6 @@ w
 Gapp/src/main/java/com/fic/muei/lactachain/model/LactachainRepository.kt,9/a/9ae408051928515a0dec17a64d06e2b8095a7651
 i
 9app/src/main/java/com/fic/muei/lactachain/ui/Selection.kt,c/8/c88ec86333c834881d449f3ebdaaea6d8c6939c6
-u
-Eapp/src/main/java/com/fic/muei/lactachain/model/MilkCollectionData.kt,5/b/5bf74fe4639174ea44de329016968739f18ef7a2
 j
 :app/src/main/java/com/fic/muei/lactachain/ui/SearchFarm.kt,2/8/2833436c55dadece9ce8a5b60b25b9d21abebbcb
 k
@@ -65,3 +63,19 @@ v
 Fapp/src/main/java/com/fic/muei/lactachain/network/LactachainService.kt,6/4/64ef77475c720f30d7d77245ce958e6bb1d98d59
 n
 >app/src/main/java/com/fic/muei/lactachain/ui/MilkCollection.kt,7/8/789e8f58ddbf1089fcfa06d9c380e51e3b0f595a
+s
+Capp/src/main/java/com/fic/muei/lactachain/ui/LactachainViewModel.kt,b/2/b22462cd508911f4e9e66bf2590b6871f97f478d
+w
+Gapp/src/main/java/com/fic/muei/lactachain/di/LactachainNetworkModule.kt,7/a/7a089955bc79a7cafa87d237e5f3e4c70d272987
+P
+ app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
+}
+Mapp/src/main/java/com/fic/muei/lactachain/network/LactachainRepositoryImpl.kt,f/a/fa1e8eaf857ecd27b6929677f03050212db76e44
+<
+build.gradle,f/0/f07866736216be0ee2aba49e392191aeae700a35
+@
+app/build.gradle,f/4/f4a01d6a4fcb971362ec00a83903fd3902f52164
+j
+:app/src/main/java/com/fic/muei/lactachain/ui/TracesList.kt,e/3/e3e1f21ab4603cc368227ee4dbb8d5594b3e4bc4
+y
+Iapp/src/main/java/com/fic/muei/lactachain/model/MilkCollectionDataItem.kt,d/b/dbce27ce9bada1d8f452db32cdcd652b74d527bc
