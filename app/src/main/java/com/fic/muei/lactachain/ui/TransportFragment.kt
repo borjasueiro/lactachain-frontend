@@ -2,19 +2,17 @@ package com.fic.muei.lactachain.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AbsListView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.selection.SelectionPredicates
-import androidx.recyclerview.selection.SelectionTracker
-import androidx.recyclerview.selection.StableIdKeyProvider
-import androidx.recyclerview.selection.StorageStrategy
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.fic.muei.lactachain.databinding.TransportTracesListBinding
-import com.fic.muei.lactachain.model.MilkCollectionDataItem
-import com.fic.muei.lactachain.ui.component.MyItemKeyProvider
-import com.fic.muei.lactachain.ui.component.SelectionItemLookup
 import com.fic.muei.lactachain.ui.component.TransportAdapter
+import com.fic.muei.lactachain.utils.ObserverSelection
 
 class TransportFragment: Fragment() {
     private lateinit var binding: TransportTracesListBinding
@@ -26,23 +24,16 @@ class TransportFragment: Fragment() {
         binding = TransportTracesListBinding.inflate(layoutInflater)
 
         val recycleView = binding.recyclerView
-        val adapter = TransportAdapter(listOf())
+        val adapter = TransportAdapter({milk ->
+            viewModel.setSelectedMilkColletion(milk)
+            findNavController().navigate(TracesListDirections.actionAddTracesListToMilkDelivery()) },
+            listOf())
         recycleView.adapter = adapter
         viewModel.listItemTransport.observe(viewLifecycleOwner) { l ->
             if (l != null) {
                 adapter.setData(l)
             }
         }
-        val tracker = SelectionTracker.Builder<MilkCollectionDataItem>(
-            "mySelection",
-            recycleView,
-            MyItemKeyProvider(adapter),
-            SelectionItemLookup(recycleView),
-            StorageStrategy.createParcelableStorage(MilkCollectionDataItem::class.java)
-        ).withSelectionPredicate(
-            SelectionPredicates.createSelectAnything()
-        ).build()
-        adapter.tracker = tracker
         return binding.root
     }
     companion object{

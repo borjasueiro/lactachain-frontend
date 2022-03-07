@@ -8,5 +8,5 @@ data class MilkCollectionDto(
     val volumn: Int,
     val farm: Int,
     val date: String?,
-    val transporter: Int
+    val transporter: Int,
 )

@@ -22,7 +22,7 @@ class MilkDeliveryMapper: Mapper<MilkDeliveryDto, MilkDeliveryData> {
             dto.test,
             dto.volumn,
             dto.temperature,
-            dto.silo,
+            dto.reception_silo,
             dto.transporter
         )
     }

@@ -6,17 +6,23 @@ import retrofit2.http.*
 interface LactachainService {
     @GET("farms/farm/{code}")
     suspend fun getFarmInfo(@Path("code") code:Int): FarmDto
-    @GET("transports/transporter")
-    suspend fun getTransporterInfoById(@Query("code") code:String): ResponseDto<TransporterDto>
+    @GET("transports/transporter/{code}")
+    suspend fun getTransporterInfoById(@Path("code") code:String): TransporterDto
     @GET("transports/transporter")
     suspend fun getTransporterInfo(@Query("nif") nif:String): ResponseDto<TransporterDto>
     @GET("transports/transport")
     suspend fun getTransportsByTransporter(@Query("transporter") code:Int): ResponseDto<TransportListDto>
     @GET("/farms/milkcollection/")
-    suspend fun getMilkCollections(): ResponseDto<MilkCollectionDto>
+    suspend fun getMilkCollections(@Query("delivered") delivered:Boolean=false): List<MilkCollectionDto>
+    @PUT("/farms/milkcollection/{code}/update_status/")
+    suspend fun updateMilkCollection(@Path("code") code:String)
+    @GET("/plant/receptionsilo/")
+    suspend fun getReceptionSilos(): ResponseDto<ReceptionSiloDto>
     @POST("/transports/transport/")
     suspend fun addTransport(@Body transport: TransportDto): ResponseDto<TransportDto>
     @POST("/farms/milkcollection/")
     suspend fun addMilkCollection(@Body milkCollection: MilkCollectionDto): MilkCollectionDto
+    @POST("/transports/milkdelivery/")
+    suspend fun addMilkDelivery(@Body milkDelivery: MilkDeliveryDto): MilkDeliveryDto
 
 }

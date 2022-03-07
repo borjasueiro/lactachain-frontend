@@ -26,7 +26,7 @@ class TracesList : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.getLists()
+        viewModel.getTracesLists()
     }
 
     override fun onCreateView(
@@ -60,7 +60,7 @@ class TracesList : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val tabLayout = binding.tabLayout
         val viewPager = binding.pager
-        viewPager.adapter =ScreenSlidePagerAdapter(requireActivity())
+        viewPager.adapter = ScreenSlidePagerAdapter(requireActivity())
         TabLayoutMediator(tabLayout, viewPager) {tab,position ->
             tab.text = tabItemList.get(position)
         }.attach()
@@ -73,7 +73,7 @@ class TracesList : Fragment() {
             return when(position){
                 0 -> TransportFragment.newInstance()
                 1 -> TransportFragment.newInstance()
-                else ->  TransportFragment.newInstance()
+                else -> TransportFragment.newInstance()
             }
         }
     }

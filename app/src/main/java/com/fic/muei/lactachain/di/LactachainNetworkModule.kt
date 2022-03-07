@@ -20,7 +20,7 @@ object LactachainNetworkModule{
     @Provides
     fun getLactachainService(client:OkHttpClient):LactachainService{
         return Retrofit.Builder()
-            .baseUrl("http://192.168.21.210:8080/")
+            .baseUrl("http://192.168.251.210:8080/")
             .addConverterFactory(MoshiConverterFactory.create())
             .client(client)
             .build()
@@ -45,6 +45,18 @@ object LactachainNetworkModule{
     @Singleton
     @Provides
     fun getMilkCollectionMapper(): Mapper<MilkCollectionDto, MilkCollectionData> = MilkCollectionMapper()
+
+    @Singleton
+    @Provides
+    fun getMilkDeliveryMapper(): Mapper<MilkDeliveryDto, MilkDeliveryData> = MilkDeliveryMapper()
+
+    @Singleton
+    @Provides
+    fun getReceptionSiloMapper(): Mapper<ReceptionSiloDto, ReceptionSiloData> = ReceptionSiloMapper()
+
+    @Singleton
+    @Provides
+    fun getFinalSiloMapper(): Mapper<FinalSiloDto, FinalSiloData> = FinalSiloMapper()
 
     @Singleton
     @Provides

@@ -12,9 +12,18 @@ interface LactachainRepository {
     fun addMilkCollection(milkCollection:MilkCollectionData): Flow<Result<Int>>
     fun setCredentials(user:String, password: String)
     fun getMilkCollections(): Flow<Result<List<MilkCollectionDataItem>>>
+    fun addMilkDelivery(milkDelivery: MilkDeliveryData): Flow<Result<Int>>
+    fun getReceptionSilosData(): Flow<Result<List<ReceptionSiloData>>>
+    suspend fun updateMilkCollection(code: String): EmptyResult
+
 }
 
 sealed class Result<out T: Any?> {
     data class Success<out T : Any?>(val data: T) : Result<T>()
     data class Error(val exception: Exception) : Result<Nothing>()
+}
+
+sealed class EmptyResult {
+    object Success : EmptyResult()
+    data class Error(val exception: Exception) : EmptyResult()
 }

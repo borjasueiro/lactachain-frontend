@@ -23,6 +23,14 @@
         android:gravity="center"
         android:text="Manuel"
         android:textSize="@dimen/font_size_list"/>
+    <TextView
+        android:id="@+id/volumn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.30"
+        android:gravity="center"
+        android:text="1000L"
+        android:textSize="@dimen/font_size_list"/>
 
     <TextView
         android:id="@+id/date"

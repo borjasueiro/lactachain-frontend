@@ -5,26 +5,35 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.fic.muei.lactachain.R
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.fic.muei.lactachain.databinding.FragmentAddTransferBinding
+import com.fic.muei.lactachain.databinding.TransportTracesListBinding
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [add_transfer.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AddTransfer : Fragment() {
-
+    private lateinit var binding: FragmentAddTransferBinding
+    private val viewModel: LactachainViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+    binding = FragmentAddTransferBinding.inflate(layoutInflater)
+
+    lifecycleScope.launch {
+        repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewModel.transportStateCreated.collect { result ->
+                when (result) {
+                }
+            }
+        }
+    }
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_transfer, container, false)
+        return binding.root
     }
 
 

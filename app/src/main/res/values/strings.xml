@@ -25,4 +25,6 @@
     <string name="silo">Silo</string>
     <string name="silo_id">Silo Id</string>
     <string name="search_farm">Search farm</string>
+    <string name="new_delivery">New delivery</string>
+    <string name="receptionSilo">Recept</string>
 </resources>
