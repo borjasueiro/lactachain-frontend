@@ -15,6 +15,8 @@ interface LactachainRepository {
     fun addMilkDelivery(milkDelivery: MilkDeliveryData): Flow<Result<Int>>
     fun getReceptionSilosData(): Flow<Result<List<ReceptionSiloData>>>
     suspend fun updateMilkCollection(code: String): EmptyResult
+    fun addFinalSilo(silo:FinalSiloData): Flow<Result<String>>
+    fun addReceptionSilo():Flow<Result<Int>>
 
 }
 

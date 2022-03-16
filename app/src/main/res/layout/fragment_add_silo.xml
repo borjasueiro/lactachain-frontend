@@ -49,27 +49,42 @@
                 android:paddingHorizontal="30dp"
                 android:paddingVertical="15dp"
                 android:layout_weight="0.5"
-                android:orientation="horizontal">
-                <com.google.android.material.textfield.TextInputLayout
+                android:gravity="center"
+                android:orientation="vertical">
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_gravity="center"
-                    app:boxStrokeColor="@color/edit_text"
                     android:layout_height="wrap_content"
-                    app:hintTextColor="@color/edit_text"
-                    app:boxBackgroundColor="@color/white"
-                    android:textColorHint="@color/field_state"
-                    android:hint="@string/silo_id"
-                    >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/volume"
-                        android:layout_width="match_parent"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:drawableStart="@drawable/ic_baseline_battery_0_bar_24"
-                        android:gravity="center_horizontal"
-                        android:textColor="@color/edit_text_selected"
-                        android:inputType="numberDecimal"
-                        android:textSize="@dimen/font_size_forms" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_weight="0.1"
+                        android:src="@drawable/ic_baseline_battery_0_bar_24">
+                    </ImageView>
+                    <RadioGroup
+                        android:id="@+id/siloType"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.9"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radio_storage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="16dp"
+                            android:checked="true"
+                            android:text="@string/storage" />
+
+                        <RadioButton
+                            android:id="@+id/radio_final"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:text="@string/final_silo" />
+                    </RadioGroup>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
@@ -80,7 +95,7 @@
         android:layout_weight="0.08"
         android:orientation="horizontal">
         <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/addMilkCollection"
+            android:id="@+id/addSiloButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/add_button"

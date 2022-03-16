@@ -67,7 +67,7 @@ class AddTransport : Fragment() {
             }
         }
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.transportStateCreated.collect {result ->
                     when (result) {
                         is TransportUIStateCreated.Success -> {

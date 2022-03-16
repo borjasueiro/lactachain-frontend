@@ -1,6 +1,5 @@
 package com.fic.muei.lactachain.network
 
-import android.util.Log
 import com.fic.muei.lactachain.model.*
 import com.fic.muei.lactachain.model.exceptions.*
 import com.fic.muei.lactachain.network.model.*
@@ -179,5 +178,37 @@ class LactachainRepositoryImpl @Inject constructor(
                 }
             }
 
+    }
+
+    override fun addFinalSilo(silo: FinalSiloData): Flow<Result<String>> {
+        return flow {
+            try {
+                lactachainService
+                    .addFinalSilo(finalSiloMapper.mapToDto(silo))
+                emit(Result.Success("Silo added."))
+            } catch (e: Exception) {
+                if ("400" in e.message.toString()) {
+                    emit(Result.Error(FinalSiloException("A field is required.")))
+                } else {
+                    emit(Result.Error(LactachainException(e.message)))
+                }
+            }
+        }
+    }
+
+    override fun addReceptionSilo(): Flow<Result<Int>> {
+        return flow{
+            try{
+                val data = lactachainService
+                    .addReceptionSilo()
+                emit(Result.Success(data.code))
+            } catch (e: Exception) {
+                if ("400" in e.message.toString()) {
+                    emit(Result.Error(FinalSiloException("A field is required.")))
+                } else {
+                    emit(Result.Error(LactachainException(e.message)))
+                }
+            }
+        }
     }
 }

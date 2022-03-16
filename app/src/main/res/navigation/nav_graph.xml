@@ -64,19 +64,12 @@
         android:id="@+id/add_transfer"
         android:name="com.fic.muei.lactachain.ui.AddTransfer"
         android:label="fragment_add_transfer"
-        tools:layout="@layout/fragment_add_transfer" >
-        <action
-            android:id="@+id/action_add_milk_delivery_to_add_silo"
-            app:destination="@id/add_silo" />
-    </fragment>
+        tools:layout="@layout/fragment_add_transfer" />
     <fragment
         android:id="@+id/add_milk_delivery"
         android:name="com.fic.muei.lactachain.ui.AddMilkDelivery"
         android:label="fragment_add_milkdelivery"
         tools:layout="@layout/fragment_add_milk_delivery">
-        <action
-            android:id="@+id/action_add_milk_delivery_to_add_silo"
-            app:destination="@id/add_silo" />
         <action
             android:id="@+id/action_add_milk_delivery_to_traces_list"
             app:destination="@id/traces_list" />

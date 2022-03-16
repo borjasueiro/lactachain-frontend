@@ -1,5 +1,6 @@
 package com.fic.muei.lactachain.ui
 
+import android.app.AlertDialog
 import com.fic.muei.lactachain.R
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Adapter
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
@@ -24,6 +26,7 @@ import kotlinx.coroutines.launch
 class AddMilkDelivery : Fragment() {
     private lateinit var binding: FragmentAddMilkDeliveryBinding
     private val viewModel: LactachainViewModel by activityViewModels()
+    private lateinit var adapter: ArrayAdapter<String>
 
     private fun ShowMessage(msg: String) {
         Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
@@ -33,43 +36,71 @@ class AddMilkDelivery : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-    binding = FragmentAddMilkDeliveryBinding.inflate(layoutInflater)
+        binding = FragmentAddMilkDeliveryBinding.inflate(layoutInflater)
 
-    viewModel.getReceptionSilosData()
-    val spinner = binding.siloList
-    spinner.adapter = ArrayAdapter(
-        requireContext(),
-        android.R.layout.simple_spinner_dropdown_item,
-        listOf("---")
-    )
-    lifecycleScope.launch {
-        viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-            viewModel.receptionSiloState.collect { result ->
-                when (result) {
-                    is ListSiloItemUIState.Success ->{
-                        val siloList: List<String> =
-                            result.data.map { silo -> "${getString(R.string.receptionSilo)} ${silo.code}" }
-                        val adapter = ArrayAdapter(
-                            requireContext(),
-                            android.R.layout.simple_spinner_dropdown_item,
-                            siloList
-                        )
-                        spinner.adapter = adapter
-                    }
-                    is ListSiloItemUIState.Error -> {
-                        Toast.makeText(
-                            requireContext(),
-                            result.exception.message,
-                            Toast.LENGTH_LONG
-                        ).show()
+        viewModel.getReceptionSilosData()
+        val spinner = binding.siloList
+        spinner.adapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_dropdown_item,
+            listOf("---")
+        )
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.receptionSiloSpinnerState.collect { result ->
+                    when (result) {
+                        is ListSiloItemUIState.Success -> {
+                            val siloList: List<String> =
+                                result.data.map { silo -> "${getString(R.string.receptionSilo)} ${silo.code}" }
+                            adapter = ArrayAdapter(
+                                requireContext(),
+                                android.R.layout.simple_spinner_dropdown_item,
+                                siloList
+                            )
+                            spinner.adapter = adapter as ArrayAdapter<*>
+
+                        }
+                        is ListSiloItemUIState.Error -> {
+                            Toast.makeText(
+                                requireContext(),
+                                result.exception.message,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
                     }
                 }
             }
         }
-    }
-        binding.addSiloButton.setOnClickListener { view ->
-            view.findNavController()
-                .navigate(AddMilkDeliveryDirections.actionAddMilkDeliveryToAddSilo())
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.receptionSiloState.collect{ result ->
+                    when (result){
+                        is ReceptionSiloItemUIState.Success ->{
+                            adapter.add("${getString(R.string.receptionSilo)} ${result.code}")
+                            val snack = Snackbar.make(binding.root,"Reception silo ${result.code} added successfully.",Snackbar.LENGTH_LONG)
+                            snack.show()
+                        }
+                        is ReceptionSiloItemUIState.Error -> {
+                            Toast.makeText(
+                                requireContext(),
+                                result.exception.message,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    }
+                }
+            }
+        }
+        binding.addSiloButton.setOnClickListener { _ ->
+            val builder = AlertDialog.Builder(context)
+            builder.setTitle("Add new reception silo")
+            builder.setMessage("Create a new silo?")
+            builder.setPositiveButton("OK", { dialog, which ->
+                viewModel.addReceptionSilo()
+                dialog.dismiss()
+            })
+            builder.setNegativeButton("CANCEL", { dialog, which -> dialog.dismiss() })
+            builder.show()
         }
 
         val testWidget = binding.sample
@@ -84,7 +115,7 @@ class AddMilkDelivery : Fragment() {
                 val test = testWidget.isActivated
                 val temperature = tempWidget.text.toString().toInt()
                 val silo = spinner.getSelectedItem().toString().split(" ")[1].toInt()
-                viewModel.addMilkDelivery(test,temperature,silo)
+                viewModel.addMilkDelivery(test, temperature, silo)
             } catch (e: Exception) {
                 ShowMessage("Volume is not a number.")
             }

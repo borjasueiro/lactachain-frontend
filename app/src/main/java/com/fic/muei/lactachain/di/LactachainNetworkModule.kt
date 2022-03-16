@@ -4,6 +4,7 @@ import com.fic.muei.lactachain.model.*
 import com.fic.muei.lactachain.network.*
 import com.fic.muei.lactachain.network.model.*
 import com.fic.muei.lactachain.utils.Mapper
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,7 +21,7 @@ object LactachainNetworkModule{
     @Provides
     fun getLactachainService(client:OkHttpClient):LactachainService{
         return Retrofit.Builder()
-            .baseUrl("http://192.168.251.210:8080/")
+            .baseUrl("http://192.168.218.210:8080/")
             .addConverterFactory(MoshiConverterFactory.create())
             .client(client)
             .build()

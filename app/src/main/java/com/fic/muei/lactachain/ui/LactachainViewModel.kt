@@ -1,18 +1,12 @@
 package com.fic.muei.lactachain.ui
 
-import android.R
-import android.util.Log
-import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.lifecycle.*
 import com.fic.muei.lactachain.model.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,8 +24,12 @@ class LactachainViewModel @Inject constructor(
     private var _listItemUIState = MutableStateFlow<ListItemUIState>(ListItemUIState.Loading)
     private var _milkDeliveryState =
         MutableStateFlow<MilkDeliveryUIState>(MilkDeliveryUIState.Empty)
-    private var _receptionSiloState =
+    private var _receptionSiloSpinnerState =
         MutableStateFlow<ListSiloItemUIState>(ListSiloItemUIState.Empty)
+    private var _receptionSiloState =
+        MutableStateFlow<ReceptionSiloItemUIState>(ReceptionSiloItemUIState.Empty)
+    private var _finalSiloState =
+        MutableStateFlow<FinalSiloItemUIState>(FinalSiloItemUIState.Empty)
 
     val farmState: StateFlow<FarmUIState> get() = _farmState
     val loginState: StateFlow<LoginUIState> get() = _loginState
@@ -40,7 +38,9 @@ class LactachainViewModel @Inject constructor(
     val milkCollectionUIState: StateFlow<MilkCollectionUIState> get() = _milkCollectionUIState
     val listItemUIState: StateFlow<ListItemUIState> get() = _listItemUIState
     val milkDeliveryState: StateFlow<MilkDeliveryUIState> get() = _milkDeliveryState
-    val receptionSiloState: StateFlow<ListSiloItemUIState> get() = _receptionSiloState
+    val receptionSiloSpinnerState: StateFlow<ListSiloItemUIState> get() = _receptionSiloSpinnerState
+    val receptionSiloState: StateFlow<ReceptionSiloItemUIState> get() = _receptionSiloState
+    val finalSiloState: StateFlow<FinalSiloItemUIState> get() = _finalSiloState
 
     //Data variables
     private var _transporter: MutableLiveData<TransporterData?> = MutableLiveData()
@@ -167,9 +167,9 @@ class LactachainViewModel @Inject constructor(
                 .collect { result ->
                     when (result) {
                         is Result.Success -> {
-                            _receptionSiloState.value = ListSiloItemUIState.Success(result.data)
+                            _receptionSiloSpinnerState.value = ListSiloItemUIState.Success(result.data)
                         }
-                        is Result.Error -> _receptionSiloState.value =
+                        is Result.Error -> _receptionSiloSpinnerState.value =
                             ListSiloItemUIState.Error(result.exception)
                     }
 
@@ -207,6 +207,41 @@ class LactachainViewModel @Inject constructor(
 
         }
     }
+    fun addReceptionSilo(){
+        viewModelScope.launch {
+            lactachainRepository.addReceptionSilo()
+                .collect{ result ->
+                    when (result){
+                        is Result.Success ->{
+                            _receptionSiloState.value = ReceptionSiloItemUIState.Success(result.data)
+                        }
+                        is Result.Error ->{
+                            _receptionSiloState.value = ReceptionSiloItemUIState.Error(result.exception)
+                        }
+                    }
+                }
+        }
+
+    }
+    fun addFinalSilo( type: String){
+        viewModelScope.launch {
+            val silo = FinalSiloData(type)
+            lactachainRepository.addFinalSilo(silo)
+                .collect{ result ->
+                    when (result) {
+                        is Result.Success -> {
+                            _finalSiloState.value =
+                                FinalSiloItemUIState.Success
+                        }
+                        is Result.Error -> {
+                            _finalSiloState.value = FinalSiloItemUIState.Error(result.exception)
+                        }
+                    }
+                }
+        }
+    }
+
+
 }
 
 sealed class FarmUIState {
@@ -255,4 +290,16 @@ sealed class ListSiloItemUIState {
     data class Success(val data: List<ReceptionSiloData>) : ListSiloItemUIState()
     data class Error(val exception: Throwable) : ListSiloItemUIState()
     object Empty : ListSiloItemUIState()
+}
+
+sealed class FinalSiloItemUIState {
+    object Success : FinalSiloItemUIState()
+    data class Error(val exception: Throwable) : FinalSiloItemUIState()
+    object Empty : FinalSiloItemUIState()
+}
+
+sealed class ReceptionSiloItemUIState {
+    data class Success(val code: Int) : ReceptionSiloItemUIState()
+    data class Error(val exception: Throwable) : ReceptionSiloItemUIState()
+    object Empty : ReceptionSiloItemUIState()
 }

@@ -1,3 +1,4 @@
 package com.fic.muei.lactachain.model
 
-data class ReceptionSiloData(val code: Int)
+data class ReceptionSiloData(val code: Int){
+}

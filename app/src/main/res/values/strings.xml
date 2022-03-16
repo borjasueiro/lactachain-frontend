@@ -27,4 +27,6 @@
     <string name="search_farm">Search farm</string>
     <string name="new_delivery">New delivery</string>
     <string name="receptionSilo">Recept</string>
+    <string name="storage">Storage</string>
+    <string name="final_silo">Final</string>
 </resources>

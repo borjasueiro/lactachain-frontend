@@ -24,5 +24,8 @@ interface LactachainService {
     suspend fun addMilkCollection(@Body milkCollection: MilkCollectionDto): MilkCollectionDto
     @POST("/transports/milkdelivery/")
     suspend fun addMilkDelivery(@Body milkDelivery: MilkDeliveryDto): MilkDeliveryDto
-
+    @POST("/plant/finalsilo/")
+    suspend fun addFinalSilo(@Body silo: FinalSiloDto): ResponseDto<FinalSiloDto>
+    @POST("/plant/receptionsilo/")
+    suspend fun addReceptionSilo(): ReceptionSiloDto
 }
