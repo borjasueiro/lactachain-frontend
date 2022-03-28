@@ -43,7 +43,7 @@ class LogIn : Fragment() {
             }
         }
         lifecycleScope.launch{
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.loginState.collectLatest{uiState ->
                     when (uiState) {
                         is LoginUIState.Success -> {

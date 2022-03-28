@@ -21,14 +21,17 @@ object LactachainRepositoryModule {
                                 transporterMapper: Mapper<TransporterDto, TransporterData>,
                                 transportMapper: Mapper<TransportDto, TransportData>,
                                 transportListMapper: Mapper<TransportListDto, TransportListData>,
-                                MilkCollectionMapper: Mapper<MilkCollectionDto, MilkCollectionData>,
-                                MilkDeliveryMapper: Mapper<MilkDeliveryDto, MilkDeliveryData>,
-                                ReceptionSiloMapper: Mapper<ReceptionSiloDto, ReceptionSiloData>,
-                                FinalSiloMapper: Mapper<FinalSiloDto, FinalSiloData>
+                                milkCollectionMapper: Mapper<MilkCollectionDto, MilkCollectionData>,
+                                milkDeliveryMapper: Mapper<MilkDeliveryDto, MilkDeliveryData>,
+                                receptionSiloMapper: Mapper<ReceptionSiloDto, ReceptionSiloData>,
+                                siloReceptionDataMapper: Mapper<ReceptionSiloDto, SiloDataItem>,
+                                siloFinalDataMapper: Mapper<FinalSiloDto, SiloDataItem>,
+                                finalSiloMapper: Mapper<FinalSiloDto, FinalSiloData>
     ): LactachainRepository {
         return LactachainRepositoryImpl(lactachainService,farmMapper, transporterMapper,
-            transportMapper, transportListMapper, MilkCollectionMapper,
-            MilkDeliveryMapper, ReceptionSiloMapper, FinalSiloMapper, interceptor)
+            transportMapper, transportListMapper, milkCollectionMapper,
+            milkDeliveryMapper, receptionSiloMapper, siloReceptionDataMapper, siloFinalDataMapper,
+            finalSiloMapper, interceptor)
     }
 
 }

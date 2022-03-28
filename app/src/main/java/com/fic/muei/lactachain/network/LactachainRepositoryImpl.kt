@@ -6,6 +6,7 @@ import com.fic.muei.lactachain.network.model.*
 import com.fic.muei.lactachain.utils.Mapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import java.util.Collections.addAll
 import javax.inject.Inject
 
 class LactachainRepositoryImpl @Inject constructor(
@@ -17,6 +18,8 @@ class LactachainRepositoryImpl @Inject constructor(
     private val milkCollectionMapper: Mapper<MilkCollectionDto, MilkCollectionData>,
     private val milkDeliveryMapper: Mapper<MilkDeliveryDto, MilkDeliveryData>,
     private val receptionSiloMapper: Mapper<ReceptionSiloDto, ReceptionSiloData>,
+    private val siloReceptionDataMapper: Mapper<ReceptionSiloDto, SiloDataItem>,
+    private val siloFinalDataMapper: Mapper<FinalSiloDto, SiloDataItem>,
     private val finalSiloMapper: Mapper<FinalSiloDto, FinalSiloData>,
     private val lactachainAuth: LactachainAuth
 ):LactachainRepository {
@@ -205,6 +208,26 @@ class LactachainRepositoryImpl @Inject constructor(
             } catch (e: Exception) {
                 if ("400" in e.message.toString()) {
                     emit(Result.Error(FinalSiloException("A field is required.")))
+                } else {
+                    emit(Result.Error(LactachainException(e.message)))
+                }
+            }
+        }
+    }
+
+    override fun getSilos(): Flow<Result<List<SiloDataItem>>> {
+        return flow{
+            var tmpSiloList: MutableList<SiloDataItem>
+            try{
+                tmpSiloList = siloReceptionDataMapper.mapFromDtoList(lactachainService
+                    .getReceptionSilos().results) as MutableList<SiloDataItem>
+                tmpSiloList.let { list1 -> siloFinalDataMapper.mapFromDtoList(lactachainService
+                    .getFinalSilos().results).let(list1::addAll)
+                }
+                emit(Result.Success(tmpSiloList))
+            } catch (e: Exception) {
+                if ("400" in e.message.toString()) {
+                    emit(Result.Error(FinalSiloException("Bad request.")))
                 } else {
                     emit(Result.Error(LactachainException(e.message)))
                 }

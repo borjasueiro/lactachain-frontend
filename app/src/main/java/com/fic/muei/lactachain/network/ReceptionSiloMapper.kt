@@ -10,12 +10,12 @@ class ReceptionSiloMapper: Mapper<ReceptionSiloDto, ReceptionSiloData> {
         return ReceptionSiloDto(model.code)
     }
 
-    override fun mapFromDto(dto: ReceptionSiloDto): ReceptionSiloData {
-        return ReceptionSiloData(dto.code)
+    override fun mapFromDto(dtoReception: ReceptionSiloDto): ReceptionSiloData {
+        return ReceptionSiloData(dtoReception.code)
     }
 
-    override fun mapFromDtoList(dtos: List<ReceptionSiloDto>): List<ReceptionSiloData> {
-        return dtos.map{mapFromDto(it)}
+    override fun mapFromDtoList(dtoReceptions: List<ReceptionSiloDto>): List<ReceptionSiloData> {
+        return dtoReceptions.map{mapFromDto(it)}
     }
 
     override fun mapToDtoList(models: List<ReceptionSiloData>): List<ReceptionSiloDto> {

@@ -18,6 +18,8 @@ interface LactachainService {
     suspend fun updateMilkCollection(@Path("code") code:String)
     @GET("/plant/receptionsilo/")
     suspend fun getReceptionSilos(): ResponseDto<ReceptionSiloDto>
+    @GET("/plant/finalsilo/")
+    suspend fun getFinalSilos(): ResponseDto<FinalSiloDto>
     @POST("/transports/transport/")
     suspend fun addTransport(@Body transport: TransportDto): ResponseDto<TransportDto>
     @POST("/farms/milkcollection/")

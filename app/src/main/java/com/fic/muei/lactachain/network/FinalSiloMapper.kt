@@ -7,11 +7,11 @@ import com.fic.muei.lactachain.utils.Mapper
 
 class FinalSiloMapper: Mapper<FinalSiloDto, FinalSiloData> {
     override fun mapToDto(model: FinalSiloData): FinalSiloDto {
-        return FinalSiloDto(model.type)
+        return FinalSiloDto(model.code,model.type)
     }
 
     override fun mapFromDto(dto: FinalSiloDto): FinalSiloData {
-        return FinalSiloData(dto.type)
+        return FinalSiloData(dto.code,dto.type)
     }
 
     override fun mapFromDtoList(dtos: List<FinalSiloDto>): List<FinalSiloData> {

@@ -16,7 +16,7 @@
             android:id="@+id/FarmName"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/new_delivery"
+            android:text="Source Silo Id"
             android:textAlignment="center"
             android:gravity="center"
             android:textSize="@dimen/header_font_size"
@@ -80,7 +80,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:contentDescription="@string/transport"/>
+                    android:contentDescription="@string/silo"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -96,37 +96,10 @@
                     app:hintTextColor="@color/edit_text"
                     app:boxBackgroundColor="@color/white"
                     android:textColorHint="@color/field_state"
-                    android:hint="@string/volume"
-                    >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/volume"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:drawableStart="@drawable/ic_baseline_opacity_24"
-                        android:gravity="center_horizontal"
-                        android:textColor="@color/edit_text_selected"
-                        android:inputType="numberDecimal"
-                        android:textSize="@dimen/font_size_forms" />
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:paddingHorizontal="36dp"
-                android:paddingVertical="15dp"
-                android:layout_weight="0.16666"
-                android:orientation="horizontal">
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    app:boxStrokeColor="@color/edit_text"
-                    android:layout_height="wrap_content"
-                    app:hintTextColor="@color/edit_text"
-                    app:boxBackgroundColor="@color/white"
-                    android:textColorHint="@color/field_state"
                     android:hint="@string/temperature"
                     >
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/temperature"
+                        android:id="@+id/volume"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:drawableStart="@drawable/ic_temp"
@@ -134,41 +107,8 @@
                         android:textColor="@color/edit_text_selected"
                         android:inputType="numberDecimal"
                         android:textSize="@dimen/font_size_forms" />
-                    <TextView
-                        android:id="@+id/temperature_units"
-                        android:layout_width="wrap_content"
-                        android:layout_height="25dip"
-                        android:text="@string/temperature_units" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:paddingHorizontal="47dp"
-                android:paddingVertical="20dp"
-                android:layout_weight="0.16666">
-                <ImageView
-                    android:id="@+id/sample"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_baseline_colorize_24"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/sample_switch"
-                    android:layout_marginEnd="47dp"
-                    android:contentDescription="@string/transport"/>
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/sample_switch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_gravity="center"
-                    android:textColor="@color/edit_text_selected"
-                    android:textSize="@dimen/font_size_forms" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
     </LinearLayout>

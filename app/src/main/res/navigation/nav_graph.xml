@@ -76,7 +76,7 @@
     </fragment>
     <fragment
         android:id="@+id/add_silo"
-        android:name="com.fic.muei.lactachain.ui.AddSilo"
+        android:name="com.fic.muei.lactachain.ui.AddFinalSilo"
         android:label="fragment_add_silo"
         tools:layout="@layout/fragment_add_silo" />
     <fragment
@@ -87,5 +87,8 @@
         <action
             android:id="@+id/action_add_traces_list_to_milk_delivery"
             app:destination="@id/add_milk_delivery" />
+        <action
+            android:id="@+id/action_traces_list_to_add_transfer"
+            app:destination="@id/add_transfer" />
     </fragment>
 </navigation>

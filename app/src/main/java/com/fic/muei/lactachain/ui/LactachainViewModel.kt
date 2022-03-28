@@ -22,6 +22,7 @@ class LactachainViewModel @Inject constructor(
     private var _milkCollectionUIState =
         MutableStateFlow<MilkCollectionUIState>(MilkCollectionUIState.Empty)
     private var _listItemUIState = MutableStateFlow<ListItemUIState>(ListItemUIState.Loading)
+    private var _listItemSiloUIState = MutableStateFlow<ListItemUIState>(ListItemUIState.Loading)
     private var _milkDeliveryState =
         MutableStateFlow<MilkDeliveryUIState>(MilkDeliveryUIState.Empty)
     private var _receptionSiloSpinnerState =
@@ -37,6 +38,7 @@ class LactachainViewModel @Inject constructor(
     val transportStateCreated: StateFlow<TransportUIStateCreated> get() = _transportStateCreated
     val milkCollectionUIState: StateFlow<MilkCollectionUIState> get() = _milkCollectionUIState
     val listItemUIState: StateFlow<ListItemUIState> get() = _listItemUIState
+    val listItemSiloUIState: StateFlow<ListItemUIState> get() = _listItemSiloUIState
     val milkDeliveryState: StateFlow<MilkDeliveryUIState> get() = _milkDeliveryState
     val receptionSiloSpinnerState: StateFlow<ListSiloItemUIState> get() = _receptionSiloSpinnerState
     val receptionSiloState: StateFlow<ReceptionSiloItemUIState> get() = _receptionSiloState
@@ -45,13 +47,18 @@ class LactachainViewModel @Inject constructor(
     //Data variables
     private var _transporter: MutableLiveData<TransporterData?> = MutableLiveData()
     private var _farm: MutableLiveData<FarmData?> = MutableLiveData()
-    private var _milkCollectionInTransport: MutableLiveData<MilkCollectionDataItem?> = MutableLiveData()
+    private var _milkCollectionInTransport: MutableLiveData<MilkCollectionDataItem?> =
+        MutableLiveData()
+    private var _silo: MutableLiveData<SiloDataItem?> = MutableLiveData()
     private var _listItemTransport: MutableLiveData<List<MilkCollectionDataItem>?> =
+        MutableLiveData()
+    private var _listItemSilos: MutableLiveData<List<SiloDataItem>?> =
         MutableLiveData()
     val transporter: LiveData<TransporterData?> get() = _transporter
     val farm: LiveData<FarmData?> get() = _farm
     val listItemTransport: LiveData<List<MilkCollectionDataItem>?> get() = _listItemTransport
-    val milkCollectionInTransport: LiveData<MilkCollectionDataItem?> get()= _milkCollectionInTransport
+    val listItemSilo: LiveData<List<SiloDataItem>?> get() = _listItemSilos
+    val milkCollectionInTransport: LiveData<MilkCollectionDataItem?> get() = _milkCollectionInTransport
 
     fun getFarmData(code: Int) {
         viewModelScope.launch {
@@ -157,7 +164,21 @@ class LactachainViewModel @Inject constructor(
                         }
                     }
                 }
+            lactachainRepository
+                .getSilos()
+                .collect { result ->
+                    when (result) {
+                        is Result.Success -> {
+                            _listItemSilos.value = result.data
+                            _listItemSiloUIState.value = ListItemUIState.Success
+                        }
+                        is Result.Error -> {
+                            _listItemSiloUIState.value = ListItemUIState.Error(result.exception)
+                        }
+                    }
+                }
         }
+
     }
 
     fun getReceptionSilosData() {
@@ -167,12 +188,26 @@ class LactachainViewModel @Inject constructor(
                 .collect { result ->
                     when (result) {
                         is Result.Success -> {
-                            _receptionSiloSpinnerState.value = ListSiloItemUIState.Success(result.data)
+                            _receptionSiloSpinnerState.value =
+                                ListSiloItemUIState.Success(result.data)
                         }
                         is Result.Error -> _receptionSiloSpinnerState.value =
                             ListSiloItemUIState.Error(result.exception)
                     }
 
+                }
+        }
+    }
+
+    fun getSiloData() {
+        viewModelScope.launch {
+            lactachainRepository
+                .getSilos()
+                .collect { result ->
+                    when (result) {
+                        is Result.Success -> ListSiloDataItemUIState.Success(result.data)
+                        is Result.Error -> ListSiloDataItemUIState.Error(result.exception)
+                    }
                 }
         }
     }
@@ -183,6 +218,12 @@ class LactachainViewModel @Inject constructor(
         }
     }
 
+    fun setSelectedSilo(silo: SiloDataItem) {
+        viewModelScope.launch {
+            _silo.value = silo
+        }
+    }
+
     fun addMilkDelivery(
         test: Boolean,
         temp: Int,
@@ -190,7 +231,14 @@ class LactachainViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             val milkDelivery =
-                MilkDeliveryData(null, test,milkCollectionInTransport.value!!.volumn, temp, silo,milkCollectionInTransport.value!!.transporterCode)
+                MilkDeliveryData(
+                    null,
+                    test,
+                    milkCollectionInTransport.value!!.volumn,
+                    temp,
+                    silo,
+                    milkCollectionInTransport.value!!.transporterCode
+                )
             lactachainRepository
                 .addMilkDelivery(milkDelivery)
                 .collect { result ->
@@ -207,27 +255,31 @@ class LactachainViewModel @Inject constructor(
 
         }
     }
-    fun addReceptionSilo(){
+
+    fun addReceptionSilo() {
         viewModelScope.launch {
             lactachainRepository.addReceptionSilo()
-                .collect{ result ->
-                    when (result){
-                        is Result.Success ->{
-                            _receptionSiloState.value = ReceptionSiloItemUIState.Success(result.data)
+                .collect { result ->
+                    when (result) {
+                        is Result.Success -> {
+                            _receptionSiloState.value =
+                                ReceptionSiloItemUIState.Success(result.data)
                         }
-                        is Result.Error ->{
-                            _receptionSiloState.value = ReceptionSiloItemUIState.Error(result.exception)
+                        is Result.Error -> {
+                            _receptionSiloState.value =
+                                ReceptionSiloItemUIState.Error(result.exception)
                         }
                     }
                 }
         }
 
     }
-    fun addFinalSilo( type: String){
+
+    fun addFinalSilo(type: String) {
         viewModelScope.launch {
-            val silo = FinalSiloData(type)
+            val silo = FinalSiloData(null,type)
             lactachainRepository.addFinalSilo(silo)
-                .collect{ result ->
+                .collect { result ->
                     when (result) {
                         is Result.Success -> {
                             _finalSiloState.value =
@@ -302,4 +354,10 @@ sealed class ReceptionSiloItemUIState {
     data class Success(val code: Int) : ReceptionSiloItemUIState()
     data class Error(val exception: Throwable) : ReceptionSiloItemUIState()
     object Empty : ReceptionSiloItemUIState()
+}
+
+sealed class ListSiloDataItemUIState {
+    data class Success(val data: List<SiloDataItem>) : ListSiloDataItemUIState()
+    data class Error(val exception: Throwable) : ListSiloDataItemUIState()
+    object Empty : ListSiloDataItemUIState()
 }

@@ -36,7 +36,7 @@ class TracesList : Fragment() {
         binding = FragmentTracesListBinding.inflate(layoutInflater)
         val progressBar = binding.progressBar
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.listItemUIState.collect { result ->
                     when (result){
                         is ListItemUIState.Success -> {
@@ -72,7 +72,7 @@ class TracesList : Fragment() {
         override fun createFragment(position: Int): Fragment{
             return when(position){
                 0 -> TransportFragment.newInstance()
-                1 -> TransportFragment.newInstance()
+                1 -> SiloFragment.newInstance()
                 else -> TransportFragment.newInstance()
             }
         }

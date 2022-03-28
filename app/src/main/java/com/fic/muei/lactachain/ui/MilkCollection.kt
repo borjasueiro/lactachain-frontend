@@ -59,7 +59,7 @@ class MilkCollection : Fragment() {
             listOf("---")
         )
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.transportState.collect { result ->
                     when (result) {
                         is TransportUIState.Success -> {
