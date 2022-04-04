@@ -55,14 +55,8 @@ j
 :app/src/main/java/com/fic/muei/lactachain/ui/SearchFarm.kt,2/8/2833436c55dadece9ce8a5b60b25b9d21abebbcb
 ƒ
 Sapp/src/main/java/com/fic/muei/lactachain/model/exceptions/MilkDeliveryException.kt,0/c/0c0aeebc04d2d27d557134c26960a398f62adc3f
-v
-Fapp/src/main/java/com/fic/muei/lactachain/network/model/ResponseDto.kt,d/6/d6c037e01b345764aca02a48880eab2ad95e1fc9
 |
 Lapp/src/main/java/com/fic/muei/lactachain/network/model/MilkCollectionDto.kt,a/a/aaae4aef65aa438ed4c70e8b65215724e7d13c02
-y
-Iapp/src/main/java/com/fic/muei/lactachain/network/MilkCollectionMapper.kt,f/9/f91e17f4eccaeed388d36de6e7da3df28e4503fe
-u
-Eapp/src/main/java/com/fic/muei/lactachain/model/MilkCollectionData.kt,5/b/5bf74fe4639174ea44de329016968739f18ef7a2
 t
 Dapp/src/main/java/com/fic/muei/lactachain/model/ReceptionSiloData.kt,5/9/59e309d9ef9a18721556b31927d634e623a5b9fa
 i
@@ -73,5 +67,19 @@ g
 7app/src/main/java/com/fic/muei/lactachain/Lactachain.kt,b/5/b5f7d3e9f969615aa4f2da1faa0e08b4cd012a5a
 y
 Iapp/src/main/java/com/fic/muei/lactachain/model/MilkCollectionDataItem.kt,d/b/dbce27ce9bada1d8f452db32cdcd652b74d527bc
+P
+ app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
 z
-Japp/src/main/java/com/fic/muei/lactachain/ui/component/TransportAdapter.kt,d/5/d5fbd9ee549b4fc17db45b08847561a11ac19e9f
+Japp/src/main/java/com/fic/muei/lactachain/network/model/MilkDeliveryDto.kt,2/a/2ae8ca7832009bbcb891187299a4eeef176f5ab6
+{
+Kapp/src/main/java/com/fic/muei/lactachain/network/model/ReceptionSiloDto.kt,d/4/d4ad5db56ed793eff01c1bb1c7c80d382571d861
+x
+Happ/src/main/java/com/fic/muei/lactachain/network/ReceptionSiloMapper.kt,f/2/f27281cfa5275f64b248c20da07c61671ef626d4
+v
+Fapp/src/main/java/com/fic/muei/lactachain/network/TransporterMapper.kt,d/a/da87274f36d0b40d4087058828b738d5867cf4fc
+e
+5app/src/main/java/com/fic/muei/lactachain/ui/LogIn.kt,8/1/816182c4f48601a7cb30d7de5d7548f056a07eca
+q
+Aapp/src/main/java/com/fic/muei/lactachain/ui/TransportFragment.kt,c/1/c16d572209eefb1dab5b229baef87cbbffcacfb4
+l
+<app/src/main/java/com/fic/muei/lactachain/ui/AddFinalSilo.kt,7/1/71867b5c0125d33675055243f07fa6af0fff08e4

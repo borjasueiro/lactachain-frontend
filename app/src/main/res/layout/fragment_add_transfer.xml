@@ -60,7 +60,7 @@
                     android:contentDescription="@string/silo"/>
 
                 <Spinner
-                    android:id="@+id/car_plate"
+                    android:id="@+id/SiloDest"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:entries="@array/silo"
@@ -73,7 +73,7 @@
                     android:minHeight="48dp"
                     android:text="@string/silo" />
                 <ImageView
-                    android:id="@+id/addTransportButton"
+                    android:id="@+id/addTransferButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_add_circle_24"
@@ -99,7 +99,7 @@
                     android:hint="@string/temperature"
                     >
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/volume"
+                        android:id="@+id/temperature"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:drawableStart="@drawable/ic_temp"

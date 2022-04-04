@@ -11,15 +11,15 @@ interface LactachainService {
     @GET("transports/transporter")
     suspend fun getTransporterInfo(@Query("nif") nif:String): ResponseDto<TransporterDto>
     @GET("transports/transport")
-    suspend fun getTransportsByTransporter(@Query("transporter") code:Int): ResponseDto<TransportListDto>
+    suspend fun getTransportsByTransporter(@Query("transporter") code:Int): List<TransportListDto>
     @GET("/farms/milkcollection/")
     suspend fun getMilkCollections(@Query("delivered") delivered:Boolean=false): List<MilkCollectionDto>
     @PUT("/farms/milkcollection/{code}/update_status/")
     suspend fun updateMilkCollection(@Path("code") code:String)
     @GET("/plant/receptionsilo/")
-    suspend fun getReceptionSilos(): ResponseDto<ReceptionSiloDto>
+    suspend fun getReceptionSilos(): List<ReceptionSiloDto>
     @GET("/plant/finalsilo/")
-    suspend fun getFinalSilos(): ResponseDto<FinalSiloDto>
+    suspend fun getFinalSilos(): List<FinalSiloDto>
     @POST("/transports/transport/")
     suspend fun addTransport(@Body transport: TransportDto): ResponseDto<TransportDto>
     @POST("/farms/milkcollection/")
@@ -27,7 +27,7 @@ interface LactachainService {
     @POST("/transports/milkdelivery/")
     suspend fun addMilkDelivery(@Body milkDelivery: MilkDeliveryDto): MilkDeliveryDto
     @POST("/plant/finalsilo/")
-    suspend fun addFinalSilo(@Body silo: FinalSiloDto): ResponseDto<FinalSiloDto>
+    suspend fun addFinalSilo(@Body silo: FinalSiloDto): FinalSiloDto
     @POST("/plant/receptionsilo/")
     suspend fun addReceptionSilo(): ReceptionSiloDto
 }

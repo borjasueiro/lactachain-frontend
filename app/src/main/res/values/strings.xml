@@ -29,4 +29,15 @@
     <string name="receptionSilo">Recept</string>
     <string name="storage">Storage</string>
     <string name="final_silo">Final</string>
+    <string name="select_silo">Select silo type</string>
+    <string name="ok">Accept</string>
+    <string name="cancel">Cancel</string>
+    <string name="add_new_re_silo">Add new reception silo</string>
+    <string name="create_new_silo">"Create a new silo?"</string>
+    <string name="added_silo_reception">Reception silo %1$s added successfully.</string>
+    <string name="added_final_silo">Silo %1$s added successfully.</string>
+    <string name="milk_del_succ">Milk deliveries added successfully</string>
+
+
+
 </resources>

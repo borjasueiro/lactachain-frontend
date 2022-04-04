@@ -77,7 +77,7 @@ class AddMilkDelivery : Fragment() {
                     when (result){
                         is ReceptionSiloItemUIState.Success ->{
                             adapter.add("${getString(R.string.receptionSilo)} ${result.code}")
-                            val snack = Snackbar.make(binding.root,"Reception silo ${result.code} added successfully.",Snackbar.LENGTH_LONG)
+                            val snack = Snackbar.make(binding.root,String.format(resources.getString(R.string.added_silo_reception),result.code),Snackbar.LENGTH_LONG)
                             snack.show()
                         }
                         is ReceptionSiloItemUIState.Error -> {
@@ -93,13 +93,13 @@ class AddMilkDelivery : Fragment() {
         }
         binding.addSiloButton.setOnClickListener { _ ->
             val builder = AlertDialog.Builder(context)
-            builder.setTitle("Add new reception silo")
-            builder.setMessage("Create a new silo?")
-            builder.setPositiveButton("OK", { dialog, which ->
+            builder.setTitle(R.string.add_new_re_silo)
+            builder.setMessage(R.string.create_new_silo)
+            builder.setPositiveButton(R.string.ok, { dialog, which ->
                 viewModel.addReceptionSilo()
                 dialog.dismiss()
             })
-            builder.setNegativeButton("CANCEL", { dialog, which -> dialog.dismiss() })
+            builder.setNegativeButton(R.string.cancel, { dialog, which -> dialog.dismiss() })
             builder.show()
         }
 
@@ -127,10 +127,10 @@ class AddMilkDelivery : Fragment() {
                     when (result) {
                         is MilkDeliveryUIState.Success -> {
                             val snack = Snackbar.make(
-                                binding.root, "Milk deliveries added successfully.",
+                                binding.root, R.string.milk_del_succ,
                                 Snackbar.LENGTH_INDEFINITE
                             )
-                            snack.setAction("ACCEPT", View.OnClickListener {
+                            snack.setAction(R.string.ok, View.OnClickListener {
                                 findNavController().navigate(AddMilkDeliveryDirections.actionAddMilkDeliveryToTracesList())
                             })
                             snack.show()

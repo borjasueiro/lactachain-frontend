@@ -18,6 +18,7 @@ interface LactachainRepository {
     fun addFinalSilo(silo:FinalSiloData): Flow<Result<String>>
     fun addReceptionSilo():Flow<Result<Int>>
     fun getSilos(): Flow<Result<List<SiloDataItem>>>
+    fun getFinalSilosData(): Flow<Result<List<FinalSiloData>>>
 
 }
 

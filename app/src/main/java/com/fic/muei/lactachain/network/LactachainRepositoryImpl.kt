@@ -6,7 +6,6 @@ import com.fic.muei.lactachain.network.model.*
 import com.fic.muei.lactachain.utils.Mapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import java.util.Collections.addAll
 import javax.inject.Inject
 
 class LactachainRepositoryImpl @Inject constructor(
@@ -70,7 +69,7 @@ class LactachainRepositoryImpl @Inject constructor(
         return flow {
             val response = lactachainService
                 .getTransportsByTransporter(code)
-            val results = response.results
+            val results = response
             emit(Result.Success(transportListMapper.mapFromDtoList(results)))
         }
     }
@@ -164,8 +163,17 @@ class LactachainRepositoryImpl @Inject constructor(
         return flow {
             val response = lactachainService
                 .getReceptionSilos()
-            val results = response.results
+            val results = response
             emit(Result.Success(receptionSiloMapper.mapFromDtoList(results)))
+        }
+    }
+
+    override fun getFinalSilosData(): Flow<Result<List<FinalSiloData>>> {
+        return flow {
+            val response = lactachainService
+                .getFinalSilos()
+            val results = response
+            emit(Result.Success(finalSiloMapper.mapFromDtoList(results)))
         }
     }
 
@@ -186,12 +194,12 @@ class LactachainRepositoryImpl @Inject constructor(
     override fun addFinalSilo(silo: FinalSiloData): Flow<Result<String>> {
         return flow {
             try {
-                lactachainService
+                val silo_response = lactachainService
                     .addFinalSilo(finalSiloMapper.mapToDto(silo))
-                emit(Result.Success("Silo added."))
+                emit(Result.Success(silo_response.code.toString()))
             } catch (e: Exception) {
                 if ("400" in e.message.toString()) {
-                    emit(Result.Error(FinalSiloException("A field is required.")))
+                    emit(Result.Error(FinalSiloException("Silo type not exists")))
                 } else {
                     emit(Result.Error(LactachainException(e.message)))
                 }
@@ -215,14 +223,15 @@ class LactachainRepositoryImpl @Inject constructor(
         }
     }
 
+
     override fun getSilos(): Flow<Result<List<SiloDataItem>>> {
         return flow{
             var tmpSiloList: MutableList<SiloDataItem>
             try{
                 tmpSiloList = siloReceptionDataMapper.mapFromDtoList(lactachainService
-                    .getReceptionSilos().results) as MutableList<SiloDataItem>
+                    .getReceptionSilos()) as MutableList<SiloDataItem>
                 tmpSiloList.let { list1 -> siloFinalDataMapper.mapFromDtoList(lactachainService
-                    .getFinalSilos().results).let(list1::addAll)
+                    .getFinalSilos()).let(list1::addAll)
                 }
                 emit(Result.Success(tmpSiloList))
             } catch (e: Exception) {

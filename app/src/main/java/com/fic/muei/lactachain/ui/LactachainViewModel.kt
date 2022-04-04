@@ -1,6 +1,7 @@
 package com.fic.muei.lactachain.ui
 
 import androidx.lifecycle.*
+import com.fic.muei.lactachain.R
 import com.fic.muei.lactachain.model.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,6 +28,8 @@ class LactachainViewModel @Inject constructor(
         MutableStateFlow<MilkDeliveryUIState>(MilkDeliveryUIState.Empty)
     private var _receptionSiloSpinnerState =
         MutableStateFlow<ListSiloItemUIState>(ListSiloItemUIState.Empty)
+    private var _finalSiloSpinnerState =
+        MutableStateFlow<ListFinalSiloItemUIState>(ListFinalSiloItemUIState.Empty)
     private var _receptionSiloState =
         MutableStateFlow<ReceptionSiloItemUIState>(ReceptionSiloItemUIState.Empty)
     private var _finalSiloState =
@@ -41,6 +44,7 @@ class LactachainViewModel @Inject constructor(
     val listItemSiloUIState: StateFlow<ListItemUIState> get() = _listItemSiloUIState
     val milkDeliveryState: StateFlow<MilkDeliveryUIState> get() = _milkDeliveryState
     val receptionSiloSpinnerState: StateFlow<ListSiloItemUIState> get() = _receptionSiloSpinnerState
+    val finalSiloSpinnerState: StateFlow<ListFinalSiloItemUIState> get() = _finalSiloSpinnerState
     val receptionSiloState: StateFlow<ReceptionSiloItemUIState> get() = _receptionSiloState
     val finalSiloState: StateFlow<FinalSiloItemUIState> get() = _finalSiloState
 
@@ -199,15 +203,20 @@ class LactachainViewModel @Inject constructor(
         }
     }
 
-    fun getSiloData() {
+    fun getFinalSilosData() {
         viewModelScope.launch {
             lactachainRepository
-                .getSilos()
+                .getFinalSilosData()
                 .collect { result ->
                     when (result) {
-                        is Result.Success -> ListSiloDataItemUIState.Success(result.data)
-                        is Result.Error -> ListSiloDataItemUIState.Error(result.exception)
+                        is Result.Success -> {
+                            _finalSiloSpinnerState.value =
+                                ListFinalSiloItemUIState.Success(result.data)
+                        }
+                        is Result.Error -> _finalSiloSpinnerState.value =
+                            ListFinalSiloItemUIState.Error(result.exception)
                     }
+
                 }
         }
     }
@@ -277,13 +286,15 @@ class LactachainViewModel @Inject constructor(
 
     fun addFinalSilo(type: String) {
         viewModelScope.launch {
-            val silo = FinalSiloData(null,type)
+            val aux_type = if (type == "Final") "2" else "1"
+            val silo = FinalSiloData(null,aux_type)
+            _finalSiloState.value = FinalSiloItemUIState.Empty
             lactachainRepository.addFinalSilo(silo)
                 .collect { result ->
                     when (result) {
                         is Result.Success -> {
                             _finalSiloState.value =
-                                FinalSiloItemUIState.Success
+                                FinalSiloItemUIState.Success(result.data)
                         }
                         is Result.Error -> {
                             _finalSiloState.value = FinalSiloItemUIState.Error(result.exception)
@@ -344,8 +355,13 @@ sealed class ListSiloItemUIState {
     object Empty : ListSiloItemUIState()
 }
 
+sealed class ListFinalSiloItemUIState {
+    data class Success(val data: List<FinalSiloData>) : ListFinalSiloItemUIState()
+    data class Error(val exception: Throwable) : ListFinalSiloItemUIState()
+    object Empty : ListFinalSiloItemUIState()
+}
 sealed class FinalSiloItemUIState {
-    object Success : FinalSiloItemUIState()
+    data class Success(val code: String) : FinalSiloItemUIState()
     data class Error(val exception: Throwable) : FinalSiloItemUIState()
     object Empty : FinalSiloItemUIState()
 }
