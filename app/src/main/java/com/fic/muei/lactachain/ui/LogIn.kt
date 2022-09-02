@@ -50,6 +50,7 @@ class LogIn : Fragment() {
                             view?.findNavController()?.navigate(LogInDirections.actionLogInToSelection(uiState.data))
                         }
                         is LoginUIState.Error -> Toast.makeText(context,uiState.exception.message, Toast.LENGTH_LONG).show()
+                        is LoginUIState.Empty -> {}
                     }
                 }
             }

@@ -39,14 +39,15 @@ class SearchFarm : Fragment() {
                 viewModel.getFarmData(farmIdAux)
             }
         }
-        lifecycleScope.launch{
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.farmState.collectLatest{uiState ->
                     when (uiState) {
                         is FarmUIState.Success -> {
                             view?.findNavController()?.navigate(SearchFarmDirections.actionSearchFarmToMilkCollection())
                         }
                         is FarmUIState.Error -> Toast.makeText(context,uiState.exception.message, Toast.LENGTH_SHORT).show()
+                        else -> throw RuntimeException()
                     }
                 }
             }

@@ -79,7 +79,9 @@ class AddTransport : Fragment() {
 
                         }
                         is TransportUIStateCreated.Error -> ShowMessage(result.exception.message.toString())
+                        else -> throw RuntimeException()
                     }
+
                 }
             }
         }

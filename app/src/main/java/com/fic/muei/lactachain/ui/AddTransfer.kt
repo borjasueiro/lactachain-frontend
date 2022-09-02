@@ -60,6 +60,7 @@ class AddTransfer : Fragment() {
                                 Toast.LENGTH_LONG
                             ).show()
                         }
+                        else -> throw RuntimeException()
                     }
                 }
             }
@@ -81,6 +82,7 @@ class AddTransfer : Fragment() {
                                 Toast.LENGTH_LONG
                             ).show()
                         }
+                        else -> throw RuntimeException()
                     }
                 }
             }

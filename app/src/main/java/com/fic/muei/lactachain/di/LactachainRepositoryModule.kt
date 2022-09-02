@@ -2,6 +2,7 @@ package com.fic.muei.lactachain.di
 
 import com.fic.muei.lactachain.model.*
 import com.fic.muei.lactachain.network.*
+import com.fic.muei.lactachain.network.BlockchainService
 import com.fic.muei.lactachain.network.model.*
 import com.fic.muei.lactachain.utils.Mapper
 import dagger.Module
@@ -32,6 +33,16 @@ object LactachainRepositoryModule {
             transportMapper, transportListMapper, milkCollectionMapper,
             milkDeliveryMapper, receptionSiloMapper, siloReceptionDataMapper, siloFinalDataMapper,
             finalSiloMapper, interceptor)
+    }
+
+    @Singleton
+    @Provides
+    fun getChainRepository(chainService: BlockchainService, farmChainMapper: Mapper<FarmChainDto,FarmParcialData>,
+                           transportChainMapper: Mapper<TransportChainDto,TransportParcialData>,
+                           transvaseChainMapper: Mapper<TransvaseChainDto,TransvaseData>,
+                           traceChainMapper: Mapper<TraceChainDto,TraceData>
+    ): ChainRepository{
+        return ChainRepositoryImpl(chainService, farmChainMapper, transportChainMapper, transvaseChainMapper, traceChainMapper)
     }
 
 }

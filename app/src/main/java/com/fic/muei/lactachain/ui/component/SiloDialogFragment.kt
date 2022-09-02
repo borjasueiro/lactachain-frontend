@@ -29,12 +29,12 @@ class SiloDialogFragment: DialogFragment(){
                     })
                 // Set the action buttons
                 .setPositiveButton(R.string.ok,
-                    DialogInterface.OnClickListener { dialog, id ->
+                    DialogInterface.OnClickListener { dialog, _ ->
                         viewModel.addFinalSilo(selection)
                         dialog.dismiss()
                     })
                 .setNegativeButton(R.string.cancel,
-                    DialogInterface.OnClickListener { dialog, id ->dialog.dismiss()
+                    DialogInterface.OnClickListener { dialog, _ ->dialog.dismiss()
                     })
 
             builder.create()

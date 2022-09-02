@@ -67,6 +67,7 @@ class AddFinalSilo : Fragment() {
                             snack.show()
                         }
                         is FinalSiloItemUIState.Error -> ShowMessage(result.exception.message.toString())
+                        else -> throw RuntimeException()
                     }
                 }
             }

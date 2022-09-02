@@ -3,6 +3,7 @@ package com.fic.muei.lactachain.ui
 import androidx.lifecycle.*
 import com.fic.muei.lactachain.R
 import com.fic.muei.lactachain.model.*
+import com.fic.muei.lactachain.network.model.FarmChainDto
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,7 +13,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LactachainViewModel @Inject constructor(
-    private val lactachainRepository: LactachainRepository
+    private val lactachainRepository: LactachainRepository,
+    private val chainRepository: ChainRepository
 ) : ViewModel() {
     //State variables
     private var _farmState = MutableStateFlow<FarmUIState>(FarmUIState.Empty)
@@ -34,6 +36,9 @@ class LactachainViewModel @Inject constructor(
         MutableStateFlow<ReceptionSiloItemUIState>(ReceptionSiloItemUIState.Empty)
     private var _finalSiloState =
         MutableStateFlow<FinalSiloItemUIState>(FinalSiloItemUIState.Empty)
+
+    private var _farmChainState = MutableStateFlow<FarmChainUIState>(FarmChainUIState.Empty)
+    val farmChainState: StateFlow<FarmChainUIState> get() = _farmChainState
 
     val farmState: StateFlow<FarmUIState> get() = _farmState
     val loginState: StateFlow<LoginUIState> get() = _loginState
@@ -64,6 +69,10 @@ class LactachainViewModel @Inject constructor(
     val listItemSilo: LiveData<List<SiloDataItem>?> get() = _listItemSilos
     val milkCollectionInTransport: LiveData<MilkCollectionDataItem?> get() = _milkCollectionInTransport
 
+    init{
+        //chainRepository.getFarmAssetById("1")
+        //chainRepository.queryAllFarms()
+    }
     fun getFarmData(code: Int) {
         viewModelScope.launch {
             lactachainRepository
@@ -305,6 +314,23 @@ class LactachainViewModel @Inject constructor(
     }
 
 
+    fun getAllFarmsChain() {
+        viewModelScope.launch {
+            chainRepository
+                .queryAllFarms()
+                .collect { result ->
+                    when (result) {
+                        is Result.Success -> {
+                            _farmChainState.value =
+                                FarmChainUIState.Success(result.data)
+                        }
+                        is Result.Error -> _farmChainState.value =
+                            FarmChainUIState.Error(result.exception)
+                    }
+
+                }
+        }
+    }
 }
 
 sealed class FarmUIState {
@@ -376,4 +402,11 @@ sealed class ListSiloDataItemUIState {
     data class Success(val data: List<SiloDataItem>) : ListSiloDataItemUIState()
     data class Error(val exception: Throwable) : ListSiloDataItemUIState()
     object Empty : ListSiloDataItemUIState()
+}
+
+
+sealed class FarmChainUIState {
+    data class Success(val data: List<FarmParcialData>) : FarmChainUIState()
+    data class Error(val exception: Throwable) : FarmChainUIState()
+    object Empty : FarmChainUIState()
 }

@@ -57,7 +57,7 @@ class AddMilkDelivery : Fragment() {
                                 android.R.layout.simple_spinner_dropdown_item,
                                 siloList
                             )
-                            spinner.adapter = adapter as ArrayAdapter<*>
+                            spinner.adapter = adapter
 
                         }
                         is ListSiloItemUIState.Error -> {
@@ -67,6 +67,7 @@ class AddMilkDelivery : Fragment() {
                                 Toast.LENGTH_LONG
                             ).show()
                         }
+                        else -> throw RuntimeException()
                     }
                 }
             }
@@ -87,6 +88,7 @@ class AddMilkDelivery : Fragment() {
                                 Toast.LENGTH_LONG
                             ).show()
                         }
+                        else -> throw RuntimeException()
                     }
                 }
             }
@@ -95,11 +97,11 @@ class AddMilkDelivery : Fragment() {
             val builder = AlertDialog.Builder(context)
             builder.setTitle(R.string.add_new_re_silo)
             builder.setMessage(R.string.create_new_silo)
-            builder.setPositiveButton(R.string.ok, { dialog, which ->
+            builder.setPositiveButton(R.string.ok, { dialog, _ ->
                 viewModel.addReceptionSilo()
                 dialog.dismiss()
             })
-            builder.setNegativeButton(R.string.cancel, { dialog, which -> dialog.dismiss() })
+            builder.setNegativeButton(R.string.cancel, { dialog, _ -> dialog.dismiss() })
             builder.show()
         }
 
@@ -110,7 +112,7 @@ class AddMilkDelivery : Fragment() {
             }
         }
         val tempWidget = binding.temperature
-        binding.addMilkDelivery.setOnClickListener { view ->
+        binding.addMilkDelivery.setOnClickListener { _ ->
             try {
                 val test = testWidget.isActivated
                 val temperature = tempWidget.text.toString().toInt()
@@ -139,6 +141,7 @@ class AddMilkDelivery : Fragment() {
                         is MilkDeliveryUIState.Error -> {
                             ShowMessage(result.exception.message.toString())
                         }
+                        else -> throw RuntimeException()
                     }
                 }
             }

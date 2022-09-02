@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId "com.fic.muei.lactachain"
-        minSdk 21
+        minSdk 26
         targetSdk 30
         versionCode 1
         versionName "1.0"
@@ -38,6 +38,26 @@ android {
         //dataBinding true
         viewBinding true
     }
+    sourceSets {
+        main {
+            assets {
+                srcDirs 'src/main/assets'
+            }
+        }
+    }
+    packagingOptions {
+        resources {
+            excludes += ['/META-INF/{AL2.0,LGPL2.1}']
+        }
+        jniLibs {
+            excludes += ['/META-INF/{AL2.0,LGPL2.1}']
+        }
+
+        resources.excludes.add("META-INF/license/*")
+        resources.excludes.add("META-INF/*")
+        resources.excludes.add("META-INF/org/apache/logging/log4j/core/config/plugins/*")
+    }
+    namespace 'com.fic.muei.lactachain'
 }
 
 dependencies {
@@ -63,4 +83,7 @@ dependencies {
     implementation "androidx.viewpager2:viewpager2:1.0.0"
     implementation "com.google.android.material:material:1.6.0-alpha02"
     implementation 'androidx.recyclerview:recyclerview-selection:1.1.0'
+}
+kapt {
+    correctErrorTypes true
 }

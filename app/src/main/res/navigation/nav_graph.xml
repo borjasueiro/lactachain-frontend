@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_selection_to_traces_list"
             app:destination="@id/traces_list" />
+        <action
+            android:id="@+id/action_selection_to_test2Fragment"
+            app:destination="@id/test2Fragment" />
     </fragment>
     <fragment
         android:id="@+id/search_farm"
@@ -91,4 +94,9 @@
             android:id="@+id/action_traces_list_to_add_transfer"
             app:destination="@id/add_transfer" />
     </fragment>
+    <fragment
+        android:id="@+id/test2Fragment"
+        android:name="com.fic.muei.lactachain.Test2Fragment"
+        android:label="fragment_test2"
+        tools:layout="@layout/fragment_test2" />
 </navigation>

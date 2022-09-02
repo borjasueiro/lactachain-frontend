@@ -79,6 +79,7 @@ class MilkCollection : Fragment() {
                                 Toast.LENGTH_LONG
                             ).show()
                         }
+                        else -> throw RuntimeException()
                     }
                 }
             }
@@ -121,6 +122,7 @@ class MilkCollection : Fragment() {
                         is MilkCollectionUIState.Error -> {
                             ShowMessage(result.exception.message.toString())
                         }
+                        else -> throw RuntimeException()
                     }
                 }
             }

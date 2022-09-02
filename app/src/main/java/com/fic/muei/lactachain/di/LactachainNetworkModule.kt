@@ -20,11 +20,21 @@ object LactachainNetworkModule{
     @Provides
     fun getLactachainService(client:OkHttpClient):LactachainService{
         return Retrofit.Builder()
-            .baseUrl("http://192.168.28.210:8080/")
+            .baseUrl("http://192.168.1.106:8080/")
             .addConverterFactory(MoshiConverterFactory.create())
             .client(client)
             .build()
             .create(LactachainService::class.java)
+    }
+    @Singleton
+    @Provides
+    fun getChainService(client:OkHttpClient):BlockchainService{
+        return Retrofit.Builder()
+            .baseUrl("http://192.168.1.106:8888/")
+            .addConverterFactory(MoshiConverterFactory.create())
+            .client(client)
+            .build()
+            .create(BlockchainService::class.java)
     }
     @Singleton
     @Provides
@@ -76,5 +86,23 @@ object LactachainNetworkModule{
     fun getLactachainAuth(interceptor: LactachainAuth):OkHttpClient{
         return OkHttpClient.Builder().addInterceptor(interceptor).build()
     }
+
+
+    @Singleton
+    @Provides
+    fun getFarmChainMapper(): Mapper<FarmChainDto, FarmParcialData> = FarmChainMapper()
+
+    @Singleton
+    @Provides
+    fun getTransportChainMapper(): Mapper<TransportChainDto,TransportParcialData> = TransportChainMapper()
+
+    @Singleton
+    @Provides
+    fun getTransvaseChainMapper(): Mapper<TransvaseChainDto, TransvaseData> = TransvaseChainMapper()
+
+    @Singleton
+    @Provides
+    fun getTraceChainMapper(): Mapper<TraceChainDto, TraceData> = TraceChainMapper()
+
 
 }
