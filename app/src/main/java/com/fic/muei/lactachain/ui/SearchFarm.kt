@@ -47,7 +47,7 @@ class SearchFarm : Fragment() {
                             view?.findNavController()?.navigate(SearchFarmDirections.actionSearchFarmToMilkCollection())
                         }
                         is FarmUIState.Error -> Toast.makeText(context,uiState.exception.message, Toast.LENGTH_SHORT).show()
-                        else -> throw RuntimeException()
+                        is FarmUIState.Empty -> {}
                     }
                 }
             }

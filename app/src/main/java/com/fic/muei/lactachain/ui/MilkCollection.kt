@@ -122,11 +122,12 @@ class MilkCollection : Fragment() {
                         is MilkCollectionUIState.Error -> {
                             ShowMessage(result.exception.message.toString())
                         }
-                        else -> throw RuntimeException()
+                        is MilkCollectionUIState.Empty -> {      }
+                        }
                     }
                 }
             }
-        }
+
         return binding.root
     }
 }

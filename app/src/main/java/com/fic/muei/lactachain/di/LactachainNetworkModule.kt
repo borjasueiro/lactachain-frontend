@@ -20,7 +20,7 @@ object LactachainNetworkModule{
     @Provides
     fun getLactachainService(client:OkHttpClient):LactachainService{
         return Retrofit.Builder()
-            .baseUrl("http://192.168.1.106:8080/")
+            .baseUrl("http://192.168.1.102:8080/")
             .addConverterFactory(MoshiConverterFactory.create())
             .client(client)
             .build()
@@ -30,7 +30,7 @@ object LactachainNetworkModule{
     @Provides
     fun getChainService(client:OkHttpClient):BlockchainService{
         return Retrofit.Builder()
-            .baseUrl("http://192.168.1.106:8888/")
+            .baseUrl("http://192.168.1.102:8888/")
             .addConverterFactory(MoshiConverterFactory.create())
             .client(client)
             .build()

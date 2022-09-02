@@ -11,7 +11,7 @@ class TransvaseChainMapper: Mapper<TransvaseChainDto, TransvaseData> {
     }
 
     override fun mapFromDto(dto: TransvaseChainDto): TransvaseData {
-        return TransvaseData(dto.siloSrc, dto.SiloDst, dto.date)
+        return TransvaseData(dto.siloSrc, dto.siloDst, dto.date)
     }
 
     override fun mapFromDtoList(dtos: List<TransvaseChainDto>): List<TransvaseData> {

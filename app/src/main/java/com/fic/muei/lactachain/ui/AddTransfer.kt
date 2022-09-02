@@ -82,7 +82,9 @@ class AddTransfer : Fragment() {
                                 Toast.LENGTH_LONG
                             ).show()
                         }
-                        else -> throw RuntimeException()
+                        is FinalSiloItemUIState -> {
+
+                        }
                     }
                 }
             }
