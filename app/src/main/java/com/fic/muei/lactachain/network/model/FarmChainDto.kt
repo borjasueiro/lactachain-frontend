@@ -1,8 +1,12 @@
 package com.fic.muei.lactachain.network.model
 
-data class FarmChainDto(val id: String,
-                        val location: String,
-                        val date: String,
-                        val transportId: String,
-                        val temperature: String
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+
+
+data class FarmChainDto(@Json(name = "name")val id: String,
+                        @Json(name = "location")val location: String,
+                        @Json(name = "date")val date: String,
+                        @Json(name = "transport_id") val transportId: String,
+                        @Json(name = "temperature") val temperature: String
 )

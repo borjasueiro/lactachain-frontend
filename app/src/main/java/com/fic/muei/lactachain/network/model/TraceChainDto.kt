@@ -1,6 +1,10 @@
 package com.fic.muei.lactachain.network.model
 
-data class TraceChainDto(val id: String,
-                         val listFarms: List<FarmChainDto>,
-                         val listTransvase: List<TransvaseChainDto>
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+
+
+data class TraceChainDto(@Json(name = "id")val id: String,
+                         @Json(name = "farms") val listFarms: List<FarmChainDto>,
+                         @Json(name = "transvase")val listTransvase: List<TransvaseChainDto>
 )

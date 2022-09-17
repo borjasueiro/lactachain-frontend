@@ -79,7 +79,7 @@ class MilkCollection : Fragment() {
                                 Toast.LENGTH_LONG
                             ).show()
                         }
-                        else -> throw RuntimeException()
+                        else -> {}
                     }
                 }
             }

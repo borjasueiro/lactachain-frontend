@@ -9,7 +9,7 @@ android:paddingTop="?attr/actionBarSize"
 tools:context=".ui.Selection">
 
     <ImageButton
-        android:id="@+id/scan_qr_trace"
+        android:id="@+id/scanqrtrace"
         android:layout_width="300dp"
         android:layout_height="150dp"
         android:contentDescription="@string/qr_scan_trace"

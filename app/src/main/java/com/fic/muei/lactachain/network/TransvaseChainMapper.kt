@@ -7,11 +7,11 @@ import com.fic.muei.lactachain.network.model.TransvaseChainDto
 import com.fic.muei.lactachain.utils.Mapper
 class TransvaseChainMapper: Mapper<TransvaseChainDto, TransvaseData> {
     override fun mapToDto(model: TransvaseData): TransvaseChainDto {
-        return TransvaseChainDto(model.siloSrc,model.siloDst, model.date)
+        return TransvaseChainDto(model.siloSrc,model.siloDst,model.temperature, model.date)
     }
 
     override fun mapFromDto(dto: TransvaseChainDto): TransvaseData {
-        return TransvaseData(dto.siloSrc, dto.siloDst, dto.date)
+        return TransvaseData(dto.siloSrc, dto.siloDst, dto.temperature, dto.date)
     }
 
     override fun mapFromDtoList(dtos: List<TransvaseChainDto>): List<TransvaseData> {

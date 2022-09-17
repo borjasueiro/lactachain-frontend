@@ -20,7 +20,7 @@ class Selection : Fragment() {
     ): View {
         binding = FragmentSelectionBinding.inflate(layoutInflater)
         val nextButton = binding.next
-        val qrButton = binding.scanQrTrace
+        val qrButton = binding.scanqrtrace
         val args = SelectionArgs.fromBundle(requireArguments())
         val btnState = args.btnState
         nextButton.text = if (!btnState) "Add Collection" else "See Traces" //False is transporter
@@ -31,7 +31,7 @@ class Selection : Fragment() {
                 view.findNavController().navigate(SelectionDirections.actionSelectionToTracesList())
         }
         qrButton.setOnClickListener { view ->
-            view.findNavController().navigate(SelectionDirections.actionSelectionToTest2Fragment())
+            view.findNavController().navigate(SelectionDirections.actionSelectionToScanQR())
         }
         return binding.root
     }

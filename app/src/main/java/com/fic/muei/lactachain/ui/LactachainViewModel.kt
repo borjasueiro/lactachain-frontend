@@ -3,6 +3,7 @@ package com.fic.muei.lactachain.ui
 import androidx.lifecycle.*
 import com.fic.muei.lactachain.R
 import com.fic.muei.lactachain.model.*
+import com.fic.muei.lactachain.model.exceptions.TraceDataException
 import com.fic.muei.lactachain.network.model.FarmChainDto
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -37,9 +38,11 @@ class LactachainViewModel @Inject constructor(
     private var _finalSiloState =
         MutableStateFlow<FinalSiloItemUIState>(FinalSiloItemUIState.Empty)
 
+    private var _qrState = MutableStateFlow<QrUIState>(QrUIState.Empty)
+
     private var _farmChainState = MutableStateFlow<FarmChainUIState>(FarmChainUIState.Empty)
     val farmChainState: StateFlow<FarmChainUIState> get() = _farmChainState
-
+    val qrState: StateFlow<QrUIState> get() = _qrState
     val farmState: StateFlow<FarmUIState> get() = _farmState
     val loginState: StateFlow<LoginUIState> get() = _loginState
     val transportState: StateFlow<TransportUIState> get() = _transportState
@@ -56,6 +59,7 @@ class LactachainViewModel @Inject constructor(
     //Data variables
     private var _transporter: MutableLiveData<TransporterData?> = MutableLiveData()
     private var _farm: MutableLiveData<FarmData?> = MutableLiveData()
+    private var _traceData: MutableLiveData<com.fic.muei.lactachain.model.TraceData?> = MutableLiveData()
     private var _milkCollectionInTransport: MutableLiveData<MilkCollectionDataItem?> =
         MutableLiveData()
     private var _silo: MutableLiveData<SiloDataItem?> = MutableLiveData()
@@ -65,6 +69,7 @@ class LactachainViewModel @Inject constructor(
         MutableLiveData()
     val transporter: LiveData<TransporterData?> get() = _transporter
     val farm: LiveData<FarmData?> get() = _farm
+    val traceData: LiveData<com.fic.muei.lactachain.model.TraceData?> get() = _traceData
     val listItemTransport: LiveData<List<MilkCollectionDataItem>?> get() = _listItemTransport
     val listItemSilo: LiveData<List<SiloDataItem>?> get() = _listItemSilos
     val milkCollectionInTransport: LiveData<MilkCollectionDataItem?> get() = _milkCollectionInTransport
@@ -313,24 +318,23 @@ class LactachainViewModel @Inject constructor(
         }
     }
 
-
-    fun getAllFarmsChain() {
+    fun getTraceDataById(id: String) {
         viewModelScope.launch {
             chainRepository
-                .queryAllFarms()
+                .getTraceById(id)
                 .collect { result ->
                     when (result) {
                         is Result.Success -> {
-                            _farmChainState.value =
-                                FarmChainUIState.Success(result.data)
+                            _traceData.value = result.data
+                            _qrState.value = QrUIState.Success
                         }
-                        is Result.Error -> _farmChainState.value =
-                            FarmChainUIState.Error(result.exception)
+                        is Result.Error -> _qrState.value =
+                            QrUIState.Error(TraceDataException("Not exist ${id} in Blockchain"))
                     }
-
                 }
         }
     }
+
 }
 
 sealed class FarmUIState {
@@ -409,4 +413,10 @@ sealed class FarmChainUIState {
     data class Success(val data: List<FarmParcialData>) : FarmChainUIState()
     data class Error(val exception: Throwable) : FarmChainUIState()
     object Empty : FarmChainUIState()
+}
+
+sealed class QrUIState {
+    object Success : QrUIState()
+    data class Error(val exception: Throwable) : QrUIState()
+    object Empty : QrUIState()
 }

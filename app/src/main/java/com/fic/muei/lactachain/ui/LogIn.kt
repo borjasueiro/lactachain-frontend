@@ -33,6 +33,7 @@ class LogIn : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentLogInBinding.inflate(layoutInflater)
+        val qrButton = binding.scanQrTrace
         val user = binding.User
         val password = binding.Password
         binding.logIn.setOnClickListener{
@@ -41,6 +42,9 @@ class LogIn : Fragment() {
                 viewModel.setAuthData(nif,password.text.toString())
                 viewModel.getTransporterData(nif)
             }
+        }
+        binding.scanQrTrace.setOnClickListener{
+            view?.findNavController()?.navigate(LogInDirections.actionLogInToScanQR())
         }
         lifecycleScope.launch{
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {

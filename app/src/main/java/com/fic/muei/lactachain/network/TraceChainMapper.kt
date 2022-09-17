@@ -11,12 +11,12 @@ import com.fic.muei.lactachain.utils.Mapper
 class TraceChainMapper: Mapper<TraceChainDto, TraceData> {
     override fun mapToDto(model: TraceData): TraceChainDto {
         return TraceChainDto(model.id,model.listFarms.map{ FarmChainDto(it.name, it.town, it.date,it.transportId, it.temperature) },
-            model.listTransvase.map{TransvaseChainDto(it.siloSrc, it.siloDst, it.date)})
+            model.listTransvase.map{TransvaseChainDto(it.siloSrc, it.siloDst, it.temperature, it.date)})
     }
 
     override fun mapFromDto(dto: TraceChainDto): TraceData {
         return TraceData(dto.id, dto.listFarms.map{ FarmParcialData(it.id, it.location, it.date,it.transportId, it.temperature) },
-            dto.listTransvase.map{ TransvaseData(it.siloSrc, it.siloDst, it.date) })
+            dto.listTransvase.map{ TransvaseData(it.siloSrc, it.siloDst,it.temperature, it.date) })
     }
 
     override fun mapFromDtoList(dtos: List<TraceChainDto>): List<TraceData> {

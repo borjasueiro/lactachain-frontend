@@ -4,6 +4,8 @@ import com.fic.muei.lactachain.model.*
 import com.fic.muei.lactachain.network.*
 import com.fic.muei.lactachain.network.model.*
 import com.fic.muei.lactachain.utils.Mapper
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,9 +21,12 @@ object LactachainNetworkModule{
     @Singleton
     @Provides
     fun getLactachainService(client:OkHttpClient):LactachainService{
+        val moshi = Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .build()
         return Retrofit.Builder()
-            .baseUrl("http://192.168.1.102:8080/")
-            .addConverterFactory(MoshiConverterFactory.create())
+            .baseUrl("http://192.168.1.166:8080/")
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .client(client)
             .build()
             .create(LactachainService::class.java)
@@ -29,9 +34,12 @@ object LactachainNetworkModule{
     @Singleton
     @Provides
     fun getChainService(client:OkHttpClient):BlockchainService{
+        val moshi = Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .build()
         return Retrofit.Builder()
-            .baseUrl("http://192.168.1.102:8888/")
-            .addConverterFactory(MoshiConverterFactory.create())
+            .baseUrl("http://192.168.1.166:8888/")
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .client(client)
             .build()
             .create(BlockchainService::class.java)

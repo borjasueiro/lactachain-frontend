@@ -1,5 +1,6 @@
 package com.fic.muei.lactachain.network
 
+import android.util.Log
 import com.fic.muei.lactachain.model.*
 import com.fic.muei.lactachain.model.exceptions.LactachainException
 import com.fic.muei.lactachain.network.model.FarmChainDto
@@ -22,18 +23,17 @@ class ChainRepositoryImpl @Inject constructor(
         //chainService.getFarmAssetById(id)
     }
 
-    override fun queryAllFarms(): Flow<Result<List<FarmParcialData>>> {
-        return flow {
-            try {
-                val farms = chainService
-                    .getAllFarms()
-                val result = Result.Success(farmChainMapper.mapFromDtoList(farms))
+    override fun getTraceById(id: String): Flow<Result<TraceData>> {
+        return flow{
+            try{
+                val trace = chainService.getTraceById(id)
+                val result = Result.Success(traceChainMapper.mapFromDto(trace))
                 emit(result)
-            } catch (e: Exception) {
+            }catch (e: Exception) {
+                Log.i("test","${e.message}")
                 emit(Result.Error(LactachainException(e.message)))
             }
         }
     }
-
 
 }
